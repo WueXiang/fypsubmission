@@ -93,7 +93,7 @@
 
                 <div class="meetinglog">
                     @foreach ($meetinglog as $meetinglog)
-                        <a href="{{ $meetinglog->date }}">{{ $meetinglog->meeting_log_id }}</a>
+                        <a href="{{ $meetinglog->date }}">{{ $meetinglog->date }} {{ $meetinglog->meeting_log_id }}</a>
                     @endforeach
                     <form action="/new_meetinglog">
                         <input type="submit" value="New Submission" />

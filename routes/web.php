@@ -62,4 +62,27 @@ Route::get('/upload', function () {
 Route::post('upload', 'UploadController@upload');
 
 Route::post('store','uploadController@store');
-?>
+
+// //new task app for vue.js testing
+// Route::get('/task', function () {
+//     return view('tasklist');
+// });
+
+// Route::prefix('api')->group(function() {
+//     Route::resource('meetinglogs', 'TaskController');
+// });
+
+// Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+//     Route::get('companies', 'CompaniesController@index')->name('companies.index');
+// });
+
+Route::get('/project', function () {
+    Route::get('projects', 'ProjectsController@index')->name('index');
+});
+
+
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
