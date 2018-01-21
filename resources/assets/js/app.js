@@ -15,8 +15,31 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+// const app = new Vue({
+//     el: '#app'
+// });
+
+import VueRouter from 'vue-router';
+
+window.Vue.use(VueRouter);
+
+import ProjectsIndex from './components/projects/ProjectsIndex.vue';
+import ProjectsCreate from './components/projects/ProjectsCreate.vue';
+import ProjectsEdit from './components/projects/ProjectsEdit.vue';
+
+const routes = [
+    {
+        path: '/',
+        components: {
+            projectsIndex: ProjectsIndex
+        }
+    },
+    {path: '/projects/create', component: ProjectsCreate, name: 'createProject'},
+    {path: '/projects/edit/:id', component: ProjectsEdit, name: 'editProject'},
+]
+
+const router = new VueRouter({ routes })
+
+const app = new Vue({ router }).$mount('#app')

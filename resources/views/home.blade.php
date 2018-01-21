@@ -22,7 +22,7 @@
 </div>
 <div class="container">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="background-color:#7b5eff;color:white;">
               <h3>Project Details</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
               <form action="http://google.com">
@@ -30,7 +30,7 @@
             </form>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="background-color:#ff3377;color:white;">
               <h3>Meeting Log</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
               <form action="/meetinglog">
@@ -38,7 +38,7 @@
                 </form>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4" style="background-color:#31e3fd;color:white;">
               <h3>Report</h3>        
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
               <form action="/upload">

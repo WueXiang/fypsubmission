@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 
-class AdminLoginController extends Controller
+class LecturerLoginController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('guest:admin');
+		$this->middleware('guest:lecturer');
 	}
     public function showLoginForm()
     {
-    	return view('auth.adminlogin');
+    	return view('auth.lecturerlogin');
     }
     public function login(Request $request)
     {
@@ -23,8 +23,8 @@ class AdminLoginController extends Controller
     		'password' => 'required|min:6'
     	]);
 
-    	if( Auth::guard('admin')->attempt(['email'=> $request -> email, 'password'=> $request -> password], $request -> remember)){
-    		return redirect()->intended(route('admin.dashboard'));
+    	if( Auth::guard('lecturer')->attempt(['email'=> $request -> email, 'password'=> $request -> password], $request -> remember)){
+    		return redirect()->intended(route('lecturer.dashboard'));
     	}
     	return redirect()->back()->withInput($request->only('email','remember'));
     }

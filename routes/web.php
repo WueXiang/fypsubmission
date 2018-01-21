@@ -12,8 +12,12 @@ use Illuminate\Http\Request;
 |
 */
 
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+
 Route::get('/', function () {
-    return view('auth.login');
+    return view('main');
 });
 
 Auth::routes();
@@ -26,29 +30,41 @@ Route::prefix('admin')->group(function(){
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 });
 
+Route::prefix('lecturer')->group(function(){
+    Route::get('/', 'LecturerController@index')->name('lecturer.dashboard');
+    Route::get('/login', 'Auth\LecturerLoginController@showLoginForm')->name('lecturer.login');
+    Route::post('/login', 'Auth\LecturerLoginController@login')->name('lecturer.login.submit');
+});
+
+
 //features
-Route::get('/meetinglog', function () {
-    $meetinglog = \App\meetinglog::all();
-    return view('meetinglog')->with('meetinglog', $meetinglog);
-});
+// Route::prefix('meetinglog')->group(function(){
+    Route::get('/meetinglog', function () {
+        $meetinglog = \App\meetinglog::all();
+        return view('meetinglog')->with('meetinglog', $meetinglog);
+    });
 
-Route::get('/new_meetinglog', function () {
-    return view('new_meetinglog');
-});
+    Route::get('/new_meetinglog', function () {
+        return view('new_meetinglog');
+    });
 
-Route::post('/new_meetinglog', function (Request $request) {
-    $data = $request->validate([
-        'meeting_date' => 'required|max:255',
-        'work_done' => 'required|max:255',
-        'work_to_be_done' => 'required|max:255',
-        'problem_encountered' => 'max:255'
-    ]);
+    Route::post('/new_meetinglog', function (Request $request) {
+        $data = $request->validate([
+            'meeting_date' => 'required|max:255',
+            'work_done' => 'required|max:255',
+            'work_to_be_done' => 'required|max:255',
+            'problem_encountered' => 'max:255'
+        ]);
 
-    $meetinglog = tap(new App\meetinglog($data))->save();
+        $meetinglog = tap(new App\meetinglog($data))->save();
 
-    return redirect('/');
-});
+        return redirect('/meetinglog');
+    });
+// });
 
+// Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('projects', 'ProjectsController@index')->name('projects.index');
+// });
 // Route::get('fileentry', 'FileEntryController@index');
 
 // Route::get('fileentry/get/{filename}', [
@@ -56,6 +72,10 @@ Route::post('/new_meetinglog', function (Request $request) {
 
 // Route::post('fileentry/add',[ 
 //         'as' => 'addentry', 'uses' => 'FileEntryController@add']);
+
+Route::get('/report', function () {
+    return view('report');
+});
 
 Route::get('/upload', function () {
     return view('upload');
