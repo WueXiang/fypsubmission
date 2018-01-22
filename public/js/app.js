@@ -45881,6 +45881,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45948,7 +45951,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-xs-12 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Project name")
+                  _vm._v("Project title")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -45956,19 +45959,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.project.name,
-                      expression: "project.name"
+                      value: _vm.project.title,
+                      expression: "project.title"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.project.name },
+                  domProps: { value: _vm.project.title },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.project, "name", $event.target.value)
+                      _vm.$set(_vm.project, "title", $event.target.value)
                     }
                   }
                 })
@@ -45978,90 +45981,104 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-xs-12 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Project address")
+                  _vm._v("Project type")
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.project.address,
-                      expression: "project.address"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.project.address },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.project.project_type,
+                        expression: "project.project_type"
                       }
-                      _vm.$set(_vm.project, "address", $event.target.value)
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "project_type" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.project,
+                          "project_type",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                  }
-                })
+                  },
+                  [
+                    _c("option", { attrs: { value: "Project" } }, [
+                      _vm._v("Project")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Research" } }, [
+                      _vm._v("Research")
+                    ])
+                  ]
+                )
               ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-xs-12 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Project website")
+                  _vm._v("Project specialization")
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.project.website,
-                      expression: "project.website"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.project.website },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.project.specialization,
+                        expression: "project.specialization"
                       }
-                      _vm.$set(_vm.project, "website", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-xs-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Project email")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.project.email,
-                      expression: "project.email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.project.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "specialization" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.project,
+                          "specialization",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
                       }
-                      _vm.$set(_vm.project, "email", $event.target.value)
                     }
-                  }
-                })
+                  },
+                  [
+                    _c("option", { attrs: { value: "SE" } }, [_vm._v("SE")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "IS" } }, [_vm._v("IS")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "DS" } }, [_vm._v("DS")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "GD" } }, [_vm._v("GD")])
+                  ]
+                )
               ])
             ]),
             _vm._v(" "),

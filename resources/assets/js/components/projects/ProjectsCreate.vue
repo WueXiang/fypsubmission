@@ -11,26 +11,29 @@
                 <form v-on:submit="saveForm()">
                     <div class="row">
                         <div class="col-xs-12 form-group">
-                            <label class="control-label">Project name</label>
-                            <input type="text" v-model="project.name" class="form-control">
+                            <label class="control-label">Project title</label>
+                            <input type="text" v-model="project.title" class="form-control">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 form-group">
-                            <label class="control-label">Project address</label>
-                            <input type="text" v-model="project.address" class="form-control">
+                            <label class="control-label">Project type</label>
+                            <!-- <input type="text" v-model="project.project_type" class="form-control"> -->
+                            <select name="project_type" v-model="project.project_type" class="form-control">
+                                <option value="Project">Project</option>
+                                <option value="Research">Research</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 form-group">
-                            <label class="control-label">Project website</label>
-                            <input type="text" v-model="project.website" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 form-group">
-                            <label class="control-label">Project email</label>
-                            <input type="text" v-model="project.email" class="form-control">
+                            <label class="control-label">Project specialization</label>
+                            <select name="specialization" v-model="project.specialization" class="form-control">
+                                <option value="SE">SE</option>
+                                <option value="IS">IS</option>
+                                <option value="DS">DS</option>
+                                <option value="GD">GD</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">

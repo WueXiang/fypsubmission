@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateFyp2sTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('Fyp2s', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('specialization')->nullable();
-            $table->string('remember_token', 100)->nullable();
+            $table->string('fyp_id')->nullable();
+            $table->string('supervisor_mark')->nullable();
+            $table->string('moderator_mark')->nullable();
             $table->timestamps();
         });
     }
-
-            
 
     /**
      * Reverse the migrations.
@@ -33,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('Fyp2s');
     }
 }
