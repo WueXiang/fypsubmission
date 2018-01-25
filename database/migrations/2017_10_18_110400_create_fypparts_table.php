@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFyp2sTable extends Migration
+class CreateFypPartsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateFyp2sTable extends Migration
      */
     public function up()
     {
-        Schema::create('Fyp2s', function (Blueprint $table) {
+        Schema::create('FypParts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fyp_id')->nullable();
+            $table->integer('fyp_id')->unsigned();
+            $table->integer('part');
             $table->string('supervisor_mark')->nullable();
             $table->string('moderator_mark')->nullable();
             $table->timestamps();
@@ -29,6 +30,6 @@ class CreateFyp2sTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Fyp2s');
+        Schema::dropIfExists('FypParts');
     }
 }

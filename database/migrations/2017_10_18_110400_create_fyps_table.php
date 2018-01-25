@@ -15,8 +15,8 @@ class CreateFypsTable extends Migration
     {
         Schema::create('Fyps', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('student_id')->nullable();
-            $table->string('project_id')->nullable();
+            $table->integer('student_id')->unsigned();
+            $table->integer('project_id')->unsigned();
             $table->timestamps();
         });
     }

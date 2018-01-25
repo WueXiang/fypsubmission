@@ -16,8 +16,9 @@ class CreateFileentriesTable extends Migration {
         {
             $table->increments('id');
             $table->string('filename');
-            $table->string('mime');
+            // $table->string('mime');
             $table->string('original_filename');
+            $table->integer('fyp_id')->unsigned();
             $table->timestamps();
         });
     }

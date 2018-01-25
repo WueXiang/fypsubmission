@@ -28,6 +28,9 @@ window.Vue.use(VueRouter);
 import ProjectsIndex from './components/projects/ProjectsIndex.vue';
 import ProjectsCreate from './components/projects/ProjectsCreate.vue';
 import ProjectsEdit from './components/projects/ProjectsEdit.vue';
+import MeetinglogsIndex from './components/meetinglogs/MeetinglogsIndex.vue';
+import MeetinglogsCreate from './components/meetinglogs/MeetinglogsCreate.vue';
+import MeetinglogsEdit from './components/meetinglogs/MeetinglogsEdit.vue';
 
 const routes = [
     {
@@ -38,8 +41,19 @@ const routes = [
     },
     {path: '/projects/create', component: ProjectsCreate, name: 'createProject'},
     {path: '/projects/edit/:id', component: ProjectsEdit, name: 'editProject'},
+// ]
+// const routes = [
+    {
+        path: '/meetinglogs',
+        components: {
+            meetinglogsIndex: MeetinglogsIndex
+        }
+    },
+    {path: '/meetinglogs/create', component: MeetinglogsCreate, name: 'createMeetinglog'},
+    {path: '/meetinglogs/edit/:id', component: MeetinglogsEdit, name: 'editMeetinglog'},
+
 ]
 
-const router = new VueRouter({ routes })
+const router = new VueRouter({ routes }) 
 
-const app = new Vue({ router }).$mount('#app')
+const app = new Vue({ router }) .$mount('#app')

@@ -25,6 +25,25 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('specialization') ? ' has-error' : '' }}">
+                            <label for="specialization" class="col-md-4 control-label">Specialization</label>
+
+                            <div class="col-md-6">
+                                <select id="specialization" type="text" class="form-control" name="specialization" value="{{ old('specialization') }}" required>
+                                    <option value="SE">SE</option>
+                                    <option value="IS">IS</option>
+                                    <option value="DS">DS</option>
+                                    <option value="GD">GD</option>
+                                </select>
+
+                                @if ($errors->has('specialization'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('specialization') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 

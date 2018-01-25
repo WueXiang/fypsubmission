@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in as {{Auth::user()->name}}!
                 </div>
             </div>
         </div>
@@ -25,9 +25,9 @@
             <div class="col-sm-4" style="background-color:#7b5eff;color:white;">
               <h3>Project Details</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="http://google.com">
-                <input type="submit" value="Open" />
-            </form>
+              <form action="/project/detail/{{-- {{\App\Fyp::where('student_id', '=', 'Auth::user()->id')}} --}}">
+                <input type="submit" value="Open"/>
+              </form>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
             <div class="col-sm-4" style="background-color:#ff3377;color:white;">

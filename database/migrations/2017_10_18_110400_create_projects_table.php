@@ -18,9 +18,9 @@ class CreateProjectsTable extends Migration
             $table->string('title')->nullable();
             $table->string('project_type')->nullable();
             $table->string('specialization')->nullable();
-            $table->string('supervisor_id')->nullable();
-            $table->string('co_supervisor_id')->nullable();
-            $table->string('moderator_id')->nullable();
+            $table->integer('supervisor_id')->unsigned();
+            $table->integer('co_supervisor_id')->unsigned();
+            $table->integer('moderator_id')->unsigned();
             $table->timestamps();
         });
     }

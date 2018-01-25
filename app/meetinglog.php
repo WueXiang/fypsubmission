@@ -4,12 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class meetinglog extends Model
+class Meetinglog extends Model
 {
     protected $fillable = [
+    	'id',
         'meeting_date',
         'work_done',
         'work_to_be_done',
-        'problem_encountered'
+        'problem_encountered',
+        'comment',
+        'fyp_id'
     ];
 }

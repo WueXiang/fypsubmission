@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <h1>Submit a meeting log</h1>
-            <form action="/new_meetinglog" method="post">
+            <form action="create" method="post">
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
                         Please fix the following errors
@@ -38,6 +38,7 @@
                         <span class="help-block">{{ $errors->first('problem_encountered') }}</span>
                     @endif
                 </div>
+            
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>
