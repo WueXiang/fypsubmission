@@ -21,6 +21,20 @@ class CreateLecturersTable extends Migration
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
         });
+        DB::table('lecturers')->insert(
+        [
+            'id'=> '1111111111',
+            'name' => 'Ng Hu',
+            'email' => 'nghu@mmu.edu.my',
+            'password'=> Hash::make('123456')
+        ]);
+        DB::table('lecturers')->insert(
+        [
+            'id'=> '2222222222',
+            'name' => 'John See',
+            'email' => 'rotijohn@mmu.edu.my',
+            'password'=> Hash::make('123456')
+        ]);
     }
 
     /**

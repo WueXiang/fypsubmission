@@ -52,31 +52,38 @@ Route::prefix('meetinglog')->group(function(){
         return view('meetinglogs/create');
     });
     Route::post('/create', function (Request $request) {
+        // $user = App\User::find(Auth::user()->id);
+        // $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+        // $fyp_id = App\Fyppart::select('fyp_id')->where("fyp_id", "=", $fyp->id)->first();
+        // $request->request->add(['fyp_id' => $fyp_id]);
         $data = $request->validate([
             'meeting_date' => 'required|max:255',
             'work_done' => 'required|max:255',
             'work_to_be_done' => 'required|max:255',
-            'problem_encountered' => 'max:255'
+            'problem_encountered' => 'max:255',
+            'fyp_id' => 'required'
         ]);
         $meetinglog = tap(new App\meetinglog($data))->save();
         return redirect('/meetinglog/');
     });
 });
 
-Route::prefix('project')->group(function(){
-    Route::get('/', 'ProjectsController@index')->name('projects.index');
-    Route::get('/detail/{id}', function ($id) {
-        $project = \App\Project::where('id', '=', $id)->get();
-        return view('projects/detail')->with('project', $project[0]);
+Route::prefix('title')->group(function(){
+    Route::resource('/','TitleController');
+    // Route::get('/', 'ProjectsController@index')->name('projects.index');
+    // Route::get('/detail/{id}', function ($id) {
+    //     $project = \App\Project::where('id', '=', $id)->get();
+    //     return view('projects/detail')->with('project', $project[0]);
     });
-    // Route::get('fileentry', 'FileEntryController@index');
+
+// Route::get('fileentry', 'FileEntryController@index');
 
 // Route::get('fileentry/get/{filename}', [
 //     'as' => 'getentry', 'uses' => 'FileEntryController@get']);
 
 // Route::post('fileentry/add',[ 
 //         'as' => 'addentry', 'uses' => 'FileEntryController@add']);
-});
+// });
 
 Route::get('/report', function () {
     return view('report');
@@ -89,4 +96,7 @@ Route::get('/upload', function () {
 Route::post('upload', 'UploadController@upload');
 
 Route::post('store','uploadController@store');
+
+
+Route::resource('titles','TitleController');
 ?>

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class meetinglogSeeder extends Seeder
+class MeetinglogTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class meetinglogSeeder extends Seeder
      */
     public function run()
 	{
-    	factory(App\meetinglog::class, 6)->create();
+    	factory(App\Meetinglog::class, 6)->create();
 	}
 }

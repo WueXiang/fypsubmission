@@ -13,7 +13,7 @@ public function run()
         'name'     => 'Chris Sevilleja',
         'username' => 'sevilayha',
         'email'    => '1122334455@student.mmu.edu.my',
-        'password' => Hash::make('awesome'),
+        'password' => Hash::make('123456'),
     ));
 }
 

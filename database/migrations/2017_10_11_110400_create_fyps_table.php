@@ -13,12 +13,22 @@ class CreateFypsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Fyps', function (Blueprint $table) {
+        Schema::create('fyps', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('student_id')->unsigned();
-            $table->integer('project_id')->unsigned();
+            // $table->foreign('student_id')->references('id')->on('users');
+            $table->integer('title_id')->unsigned();
+            // $table->foreign('title_id')->references('id')->on('titles');
             $table->timestamps();
-        });
+            });
+
+            DB::table('fyps')->insert(
+            [
+                'id'=> '11112222',
+                'student_id' => '1133557799',
+                'title_id' => '11112222'
+            ]);
+
     }
 
     /**
@@ -28,6 +38,6 @@ class CreateFypsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Fyps');
+        Schema::dropIfExists('fyps');
     }
 }

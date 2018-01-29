@@ -21,6 +21,12 @@ class CreateAdminsTable extends Migration
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
         });
+        DB::table('admins')->insert(
+        [
+            'name' => 'default_admin',
+            'email' => 'admin@mmu.edu.my',
+            'password'=> Hash::make('123456')
+        ]);
     }
 
     /**

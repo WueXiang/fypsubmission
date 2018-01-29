@@ -22,6 +22,14 @@ class CreateUsersTable extends Migration
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
         });
+        DB::table('users')->insert(
+        [
+            'id'=> '1133557799',
+            'name' => 'someone',
+            'email' => '1133557799@student.mmu.edu.my',
+            'password'=> Hash::make('123456'),
+            'specialization' => 'SE'
+        ]);
     }
 
             
@@ -35,4 +43,5 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('users');
     }
+
 }

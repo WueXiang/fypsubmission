@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Meetinglog extends Model
 {
     protected $fillable = [
-    	'id',
         'meeting_date',
         'work_done',
         'work_to_be_done',

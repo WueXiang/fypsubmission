@@ -38,6 +38,12 @@
                         <span class="help-block">{{ $errors->first('problem_encountered') }}</span>
                     @endif
                 </div>
+                <?php
+                $user = App\User::find(Auth::user()->id);
+                $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+                $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
+                ?>
+                <input type="hidden" class="form-control" id="fyp_id" name="fyp_id" value={{$fyppart->id}}>
             
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>

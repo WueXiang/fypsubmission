@@ -13,14 +13,22 @@ class CreateFypPartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('FypParts', function (Blueprint $table) {
+        Schema::create('fypparts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fyp_id')->unsigned();
+            // $table->foreign('fyp_id')->references('id')->on('fyps');
             $table->integer('part');
             $table->string('supervisor_mark')->nullable();
             $table->string('moderator_mark')->nullable();
             $table->timestamps();
         });
+
+        DB::table('fypparts')->insert(
+        [
+            'id'=> '11112222',
+            'fyp_id' => '11112222',
+            'part' => '1'
+        ]);
     }
 
     /**
@@ -30,6 +38,6 @@ class CreateFypPartsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('FypParts');
+        Schema::dropIfExists('fypparts');
     }
 }
