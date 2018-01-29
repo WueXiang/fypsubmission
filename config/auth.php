@@ -112,14 +112,21 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
-            'expire' => 60,
+            'expire' => 900,
+        ],
+    ],
+    'passwords' => [
+        'lecturers' => [
+            'provider' => 'lecturers',
+            'table' => 'password_resets',
+            'expire' => 900,
         ],
     ],
     'passwords' => [
         'admins' => [
             'provider' => 'admins',
             'table' => 'password_resets',
-            'expire' => 60,
+            'expire' => 900,
         ],
     ],
 

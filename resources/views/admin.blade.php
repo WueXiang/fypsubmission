@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in as admin!
+                      You are logged in as admin!
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
             <div class="col-sm-4">
               <h3>Project Details</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/projects">
+              <form action="/title">
                 <input type="submit" value="Open" />
             </form>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>

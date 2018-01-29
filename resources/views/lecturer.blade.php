@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in as lecturer!
+                    You are logged in as lecturer {{Auth::user()->name}}!
                 </div>
             </div>
         </div>
@@ -25,25 +25,25 @@
             <div class="col-sm-4">
               <h3>Project Details</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/projects">
+              <a href="/title">
                 <input type="submit" value="Open" />
-            </form>
+              </a>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
             <div class="col-sm-4">
               <h3>Meeting Log</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/meetinglog">
+              <a href="/meetinglog">
                 <input type="submit" value="Open" />
-                </form>
+              </a>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
             <div class="col-sm-4">
               <h3>Report</h3>        
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/upload">
+              <a href="/upload">
                 <input type="submit" value="Open" />
-                </form>
+              </a>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
             </div>
           </div>

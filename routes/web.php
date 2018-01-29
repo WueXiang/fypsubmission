@@ -23,11 +23,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
 Route::prefix('admin')->group(function(){
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 });
 
 Route::prefix('lecturer')->group(function(){
@@ -70,6 +72,9 @@ Route::prefix('meetinglog')->group(function(){
 
 Route::prefix('title')->group(function(){
     Route::resource('/','TitleController');
+    Route::get('/show', function () {
+        return view('titles/show');
+    });
     // Route::get('/', 'ProjectsController@index')->name('projects.index');
     // Route::get('/detail/{id}', function ($id) {
     //     $project = \App\Project::where('id', '=', $id)->get();

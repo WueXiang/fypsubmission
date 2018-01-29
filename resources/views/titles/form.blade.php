@@ -28,6 +28,10 @@
             {!! Form::select('specialization', ['IS' => 'Information System', 'SE' => 'Software Engineering', 'GD' => 'Game Development', 'DS'=>'Data Science'], null, array('placeholder' => '----------------','class' => 'form-control')) !!}
         </div>
     </div>
+    <?php
+                $user_id = Auth::user()->id;
+    ?>
+    {!! Form::hidden('supervisor_id', $user , null, array('placeholder' => '----------------','class' => 'form-control')) !!}
 
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
     <button type="submit" class="btn btn-primary">Submit</button>
