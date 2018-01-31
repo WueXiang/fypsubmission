@@ -11,8 +11,6 @@ class UploadController extends Controller {
 
 			
 			$file = Input::file('file');
-			
-
 			$filename = $file->getClientOriginalName();
 			$ext = pathinfo($filename, PATHINFO_EXTENSION);
 			$allowed = array('pdf');

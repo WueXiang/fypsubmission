@@ -30,6 +30,15 @@ class CreateUsersTable extends Migration
             'password'=> Hash::make('123456'),
             'specialization' => 'SE'
         ]);
+
+        DB::table('users')->insert(
+        [
+            'id'=> '1122334455',
+            'name' => 'someone_else',
+            'email' => '1122334455@student.mmu.edu.my',
+            'password'=> Hash::make('123456'),
+            'specialization' => 'IS'
+        ]);
     }
 
             

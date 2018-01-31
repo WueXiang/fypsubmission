@@ -29,6 +29,13 @@ class CreateFypsTable extends Migration
                 'title_id' => '11112222'
             ]);
 
+            DB::table('fyps')->insert(
+            [
+                'id'=> '22222222',
+                'student_id' => '1122334455',
+                'title_id' => '11114444'
+            ]);
+
     }
 
     /**

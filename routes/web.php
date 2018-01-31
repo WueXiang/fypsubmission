@@ -75,20 +75,14 @@ Route::prefix('title')->group(function(){
     Route::get('/show', function () {
         return view('titles/show');
     });
+    Route::get('/create', function () {
+        return view('titles/create');
+    });
     // Route::get('/', 'ProjectsController@index')->name('projects.index');
     // Route::get('/detail/{id}', function ($id) {
     //     $project = \App\Project::where('id', '=', $id)->get();
     //     return view('projects/detail')->with('project', $project[0]);
-    });
-
-// Route::get('fileentry', 'FileEntryController@index');
-
-// Route::get('fileentry/get/{filename}', [
-//     'as' => 'getentry', 'uses' => 'FileEntryController@get']);
-
-// Route::post('fileentry/add',[ 
-//         'as' => 'addentry', 'uses' => 'FileEntryController@add']);
-// });
+});
 
 Route::get('/report', function () {
     return view('report');
@@ -102,6 +96,51 @@ Route::post('upload', 'UploadController@upload');
 
 Route::post('store','uploadController@store');
 
+Route::post('/new_report', function (Request $request) {
 
-Route::resource('titles','TitleController');
+    $user = App\User::find(Auth::user()->id);
+    $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+    $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
+    $file=request()->file('file');
+    $filename = $file->getClientOriginalName();
+    // $ext=$file->guessClientExtension();
+    // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    $destination = 'reports/';
+    $codename= ''.$fyppart->id.'.pdf';
+    $allowed= array('pdf');
+    if( ! in_array( $ext, $allowed ) ) {
+        echo 'File format error: Only support pdf format.';
+    }
+    else{
+        // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
+        $file->move($destination, $codename);
+        $request->request->add(['filename' => $codename]);
+        $request->request->add(['original_filename' => $filename]);
+        $request->request->add(['fyp_id' => $fyppart->id]);
+        $data = $request->validate([
+            'fyp_id' => 'required',
+            'filename'=>'required',
+            'original_filename'=>'required',
+        ]);
+        $report = tap(new App\Report($data))->save();
+        return redirect('/upload');
+
+        echo '<iframe src= "reports/'.$fyppart_id->id.'.'.$ext.'", width="100%" style="height:100%"></iframe>';
+        
+        echo 'Uploaded';
+    }
+});
+
+Route::post('/report_download', function (Request $request) {   
+    $path = 'D:\\xampp\\htdocs\\fypsubmission\\public\\reports\\'.$fyppart_id->id.'.'.$ext.'';
+    return response()->download($path);
+});
+
+    // return back();
+
+        
+    //     return redirect('/upload');
+    
+
 ?>

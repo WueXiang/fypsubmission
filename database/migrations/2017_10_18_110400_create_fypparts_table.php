@@ -29,6 +29,13 @@ class CreateFypPartsTable extends Migration
             'fyp_id' => '11112222',
             'part' => '1'
         ]);
+
+        DB::table('fypparts')->insert(
+        [
+            'id'=> '22222222',
+            'fyp_id' => '22222222',
+            'part' => '1'
+        ]);
     }
 
     /**
