@@ -25,7 +25,7 @@
             <div class="col-sm-4">
               <h3>Project Details</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/title">
+              <form action="/titles">
                 <input type="submit" value="Open" />
             </form>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
@@ -41,7 +41,7 @@
             <div class="col-sm-4">
               <h3>Report</h3>        
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/upload">
+              <form action="/report">
                 <input type="submit" value="Open" />
                 </form>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>

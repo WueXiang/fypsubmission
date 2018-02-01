@@ -10,7 +10,7 @@ class LecturerLoginController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('guest:lecturer');
+		$this->middleware('guest:lecturer', ['except' => ['logout']]);
 	}
     public function showLoginForm()
     {

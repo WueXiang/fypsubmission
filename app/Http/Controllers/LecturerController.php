@@ -23,6 +23,6 @@ class LecturerController extends Controller
      
     public function index()
     {
-        return view('lecturer');
+        return view('titles.index');
     }
 }

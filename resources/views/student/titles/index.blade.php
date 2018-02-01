@@ -34,6 +34,7 @@
 
     @endif
 
+
     <table class="table table-bordered">
 
         <tr>
@@ -46,15 +47,11 @@
 
         </tr>
 
-        <?php
-            $user = App\Lecturer::find(Auth::user()->id);
-            $titles = App\Title::where("supervisor_id", "=", $user->id)->get();
-          ?>
     @foreach ($titles as $title)
 
     <tr>
 
-{{--         <td>{{ ++$i }}</td> --}}
+        <td>{{ ++$i }}</td>
         <td>{{ $title->title}}</td>
         <td>{{ $title->type}}</td>
         <td>{{ $title->specialization}}</td>
@@ -79,6 +76,6 @@
     </table>
 
 
-{{--     {!! $titles->links() !!} --}}
+    {!! $titles->links() !!}
 
 @endsection

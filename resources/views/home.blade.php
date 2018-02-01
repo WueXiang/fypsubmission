@@ -50,20 +50,20 @@
 </div>
 <div class="container">
           <div class="row">
-            <a href="/title/show">
+            <a href="student/title/show">
               <div class="col-sm-4" style="background-color:#7b5eff;color:white; height:300px;">
                 <h3><strong>Project Details</strong></h3>
                 <p><br>Final Year Project no.{{$title->id}}<h4><strong>{{$title->title}}</strong></h4></p>
               </div>
             </a>
-            <a href ="/meetinglog">
+            <a href ="student/meetinglog">
               <div class="col-sm-4" style="background-color:#ff3377;color:white; height:300px;">
                 <h3><strong>Meeting Log</strong></h3>
                 <p style="font-size: 30px;">{{$meetinglog_count}} out of 6 submitted</p>
                 <p>Requirement minimum six meeting logs to be submitted</p>
               </div>
             </a>
-            <a href="/upload">
+            <a href="student/report">
               <div class="col-sm-4" style="background-color:#31e3fd;color:white;height:300px;">
               <h3><strong>Report</strong></h3>        
               <p style="font-size: 30px;">{{$report_status}}</p>

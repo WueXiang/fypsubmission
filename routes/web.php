@@ -36,57 +36,100 @@ Route::prefix('lecturer')->group(function(){
     Route::get('/', 'LecturerController@index')->name('lecturer.dashboard');
     Route::get('/login', 'Auth\LecturerLoginController@showLoginForm')->name('lecturer.login');
     Route::post('/login', 'Auth\LecturerLoginController@login')->name('lecturer.login.submit');
+    Route::get('/report', function () {
+        return view('report');
+    });
 });
 
 
 //features
-Route::prefix('meetinglog')->group(function(){
-    Route::get('/', function () {
-        $meetinglog = \App\Meetinglog::all();
-        return view('meetinglogs/index')->with('meetinglog', $meetinglog);
+Route::prefix('student')->group(function(){
+    Route::prefix('meetinglog')->group(function(){
+        Route::get('/', function () {
+            $meetinglog = \App\Meetinglog::all();
+            return view('student/meetinglogs/index')->with('meetinglog', $meetinglog);
+        });
+        Route::get('/index/{id}', function ($id) {
+            $meetinglog = \App\Meetinglog::where('id', '=', $id)->get();
+            // echo $meetinglog[0]->id;
+            return view('student/meetinglogs/detail')->with('meetinglog', $meetinglog[0]);
+        });
+        Route::get('/create', function () {
+            return view('student/meetinglogs/create');
+        });
+        Route::post('/create', function (Request $request) {
+            // $user = App\User::find(Auth::user()->id);
+            // $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+            // $fyp_id = App\Fyppart::select('fyp_id')->where("fyp_id", "=", $fyp->id)->first();
+            // $request->request->add(['fyp_id' => $fyp_id]);
+            $data = $request->validate([
+                'meeting_date' => 'required|max:255',
+                'work_done' => 'required|max:255',
+                'work_to_be_done' => 'required|max:255',
+                'problem_encountered' => 'max:255',
+                'fyp_id' => 'required'
+            ]);
+            $meetinglog = tap(new App\meetinglog($data))->save();
+            return redirect('student/meetinglog/');
+        });
     });
-    Route::get('/index/{id}', function ($id) {
-        $meetinglog = \App\Meetinglog::where('id', '=', $id)->get();
-        // echo $meetinglog[0]->id;
-        return view('meetinglogs/detail')->with('meetinglog', $meetinglog[0]);
+    Route::resource('titles','TitleController');
+    Route::get('title/show', function () {
+        return view('student/titles/show');
     });
-    Route::get('/create', function () {
-        return view('meetinglogs/create');
+    Route::get('/report', function () {
+        return view('student/report');
     });
-    Route::post('/create', function (Request $request) {
-        // $user = App\User::find(Auth::user()->id);
-        // $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-        // $fyp_id = App\Fyppart::select('fyp_id')->where("fyp_id", "=", $fyp->id)->first();
-        // $request->request->add(['fyp_id' => $fyp_id]);
-        $data = $request->validate([
-            'meeting_date' => 'required|max:255',
-            'work_done' => 'required|max:255',
-            'work_to_be_done' => 'required|max:255',
-            'problem_encountered' => 'max:255',
-            'fyp_id' => 'required'
-        ]);
-        $meetinglog = tap(new App\meetinglog($data))->save();
-        return redirect('/meetinglog/');
+    Route::post('new_report', function (Request $request) {
+
+        $user = App\User::find(Auth::user()->id);
+        $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+        $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
+        $file=request()->file('file');
+        $filename = $file->getClientOriginalName();
+        // $ext=$file->guessClientExtension();
+        // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $destination = 'student/reports/';
+        $codename= ''.$fyppart->id.'.pdf';
+        $allowed= array('pdf');
+        if( ! in_array( $ext, $allowed ) ) {
+            echo 'File format error: Only support pdf format.';
+        }
+        else{
+            // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
+            $file->move($destination, $codename);
+            $request->request->add(['filename' => $codename]);
+            $request->request->add(['original_filename' => $filename]);
+            $request->request->add(['fyp_id' => $fyppart->id]);
+            $data = $request->validate([
+                'fyp_id' => 'required',
+                'filename'=>'required',
+                'original_filename'=>'required',
+            ]);
+            $report = tap(new App\Report($data))->save();
+            return redirect('student/report');
+        }
+    });
+
+    Route::post('/report_download', function (Request $request) {   
+        $path = 'D:\\xampp\\htdocs\\fypsubmission\\public\\reports\\'.$fyppart_id->id.'.'.$ext.'';
+        return response()->download($path);
     });
 });
 
-Route::prefix('title')->group(function(){
-    Route::resource('/','TitleController');
-    Route::get('/show', function () {
-        return view('titles/show');
-    });
-    Route::get('/create', function () {
-        return view('titles/create');
-    });
+// Route::prefix('titles')->group(function(){
+    
+    // Route::get('title/create', function () {
+    //     return view('titles/create');
+    // });
     // Route::get('/', 'ProjectsController@index')->name('projects.index');
     // Route::get('/detail/{id}', function ($id) {
     //     $project = \App\Project::where('id', '=', $id)->get();
     //     return view('projects/detail')->with('project', $project[0]);
-});
+// });
 
-Route::get('/report', function () {
-    return view('report');
-});
+
 
 Route::get('/upload', function () {
     return view('upload');
@@ -96,46 +139,7 @@ Route::post('upload', 'UploadController@upload');
 
 Route::post('store','uploadController@store');
 
-Route::post('/new_report', function (Request $request) {
 
-    $user = App\User::find(Auth::user()->id);
-    $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-    $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
-    $file=request()->file('file');
-    $filename = $file->getClientOriginalName();
-    // $ext=$file->guessClientExtension();
-    // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
-    $ext = pathinfo($filename, PATHINFO_EXTENSION);
-    $destination = 'reports/';
-    $codename= ''.$fyppart->id.'.pdf';
-    $allowed= array('pdf');
-    if( ! in_array( $ext, $allowed ) ) {
-        echo 'File format error: Only support pdf format.';
-    }
-    else{
-        // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
-        $file->move($destination, $codename);
-        $request->request->add(['filename' => $codename]);
-        $request->request->add(['original_filename' => $filename]);
-        $request->request->add(['fyp_id' => $fyppart->id]);
-        $data = $request->validate([
-            'fyp_id' => 'required',
-            'filename'=>'required',
-            'original_filename'=>'required',
-        ]);
-        $report = tap(new App\Report($data))->save();
-        return redirect('/upload');
-
-        echo '<iframe src= "reports/'.$fyppart_id->id.'.'.$ext.'", width="100%" style="height:100%"></iframe>';
-        
-        echo 'Uploaded';
-    }
-});
-
-Route::post('/report_download', function (Request $request) {   
-    $path = 'D:\\xampp\\htdocs\\fypsubmission\\public\\reports\\'.$fyppart_id->id.'.'.$ext.'';
-    return response()->download($path);
-});
 
     // return back();
 

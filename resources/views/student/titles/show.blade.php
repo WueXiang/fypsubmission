@@ -2,18 +2,18 @@
 @section('content')
   
 <?php
-    // $user = App\Lecturer::find();
-    $title = App\Title::where("supervisor_id", "=", Auth::id())->first();
-    // $supervisor = App\Lecturer::where("id", "=", $title->supervisor_id)->first();
-    // $moderator = App\Lecturer::where("id", "=", $title->moderator_id)->first();
-    // $co_supervisor = App\Lecturer::where("id", "=", $title->co_supervisor_id)->first();
-    // if ($co_supervisor === null) {
-    //     $co_supervisor_name = "not available";
-    //     $co_supervisor_email = "not available";
-    // }
+    $user = App\User::find(Auth::user()->id);
+    $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+    $title = App\Title::where("id", "=", $fyp->title_id)->first();
+    $supervisor = App\Lecturer::where("id", "=", $title->supervisor_id)->first();
+    $moderator = App\Lecturer::where("id", "=", $title->moderator_id)->first();
+    $co_supervisor = App\Lecturer::where("id", "=", $title->co_supervisor_id)->first();
+    if ($co_supervisor === null) {
+        $co_supervisor_name = "not available";
+        $co_supervisor_email = "not available";
+    }
 ?>
-{{$title}}
-{{--     <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>        
-    </div> --}}
+    </div>
 {{--     <div class="container">
     <div class="row">
     <div class="row">

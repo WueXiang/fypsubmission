@@ -25,7 +25,7 @@
         <label>Select file to upload:</label>
         <div class="uploader" style=" position:absolute;">
           <span>
-            <form action="{{ URL::to('upload')}}" class="dropzone" id="my-awesome-dropzone" method="post" enctype="multipart/form-data" type="file" name="file" style="width:500px; height:45%;">
+            <form action="{{ URL::to('new_report')}}" class="dropzone" id="my-awesome-dropzone" method="post" enctype="multipart/form-data" type="file" name="file" style="width:500px; height:45%;">
               <input type="hidden" value="{{ csrf_token() }}" name="_token">
             </form>
           </span>

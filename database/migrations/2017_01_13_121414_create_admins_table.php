@@ -19,6 +19,7 @@ class CreateAdminsTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('remember_token', 100)->nullable();
+            // $table->rememberToken();
             $table->timestamps();
         });
         DB::table('admins')->insert(
