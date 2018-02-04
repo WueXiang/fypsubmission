@@ -1,6 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+<?php
+  if (Auth::check()){
+    $fyp_count = App\Fyp::count();
+    if (App\Fyp::count()>1){
+      $fyp_count_status = ''.$fyp_count.' enrolled projects';
+    }
+    else{
+      $fyp_count_status = ''.$fyp_count.' enrolled project';
+    }
+
+    $title_count = App\Title::count();
+    if (App\Title::count()>1){
+      $title_count_status = ''.$title_count.' proposed project titles';
+    }
+    else{
+      $title_count_status = ''.$title_count.' proposed project title';
+    }
+
+    // if (( App\User()->student == '0')&&( Auth::user()->lecturer == '0')&&( Auth::user()->admin == '0')){
+    //   $student_request_count = 
+    // }
+  }
+
+?>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -14,38 +39,35 @@
                         </div>
                     @endif
 
-                      You are logged in as admin!
+                    You are logged in as {{Auth::user()->name}} !
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="container">
-          <div class="row">
-            <div class="col-sm-4">
-              <h3>Project Details</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/titles">
-                <input type="submit" value="Open" />
-            </form>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+  <div class="row">
+            <a href="titles">
+              <div class="col-sm-4" style="background-color:#7b5eff;color:white;text-align:center;height:300px;">
+                <h3><strong>Projects Management</strong></h3><br>
+                <p style="font-size: 20px;" style="font-size: 30px;">{{$title_count_status}}</p>
+                <p style="font-size: 20px;">{{$fyp_count_status}}</p>
+              </div>
+            </a>
+            <a href ="student/meetinglog">
+              <div class="col-sm-4" style="background-color:#ff3377;color:white;text-align:center;height:300px;">
+                <h3><strong>User Management</strong></h3>
+                <p style="font-size: 20px;"></p>
+                <p>{{}}</p>
+              </div>
+            </a>
+            <a href="student/report">
+              <div class="col-sm-4" style="background-color:#31e3fd;color:white;text-align:center;height:300px;">
+              <h3><strong>Submission Management</strong></h3>        
+              <p style="font-size: 20px;"></p>
+              <p>Report submission duedate on week 12 </p>
             </div>
-            <div class="col-sm-4">
-              <h3>Meeting Log</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/meetinglog">
-                <input type="submit" value="Open" />
-                </form>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-            </div>
-            <div class="col-sm-4">
-              <h3>Report</h3>        
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-              <form action="/report">
-                <input type="submit" value="Open" />
-                </form>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-            </div>
-          </div>
-        </div>
+          </a>
+  </div>
+</div>
 @endsection

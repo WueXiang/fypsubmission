@@ -46,13 +46,14 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-    {
+    {   
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'specialization' => 'required|string',
         ]);
+                
     }
 
     /**
@@ -63,11 +64,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'specialization' => $data['specialization'],
-        ]);
+        $email  = $data['email'];
+        $domain = strstr($email, '@');
+        // echo $domain; // prints @example.com
+        if ($domain = 'student.mmu.edu.my' || $domain = 'mmu.edu.my'){
+            $userid = strstr($email, '@', true); // As of PHP 5.3.0
+            // echo $userid; // prints name
+            $data['id']= $userid;
+            // $data['student']='1'
+            // exit($data['name']);
+            return User::create([
+                'id' => $data['id'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'specialization' => $data['specialization'],
+                // 'student' => $data['student'],
+            ]);
+        }
     }
 }

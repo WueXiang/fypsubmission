@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+          if (Auth::check()) {
+            if (( Auth::user()->student == '0')&&( Auth::user()->lecturer == '0')&&( Auth::user()->admin == '1')){
+              return view('admin');
+            }
+            elseif (( Auth::user()->student == '0')&&( Auth::user()->lecturer == '1')&&( Auth::user()->admin == '0')){
+              return view('lecturer');
+            }
+            elseif (( Auth::user()->student == '1')&&( Auth::user()->lecturer == '0')&&( Auth::user()->admin == '0')){
+              return view('student');
+            }
+            else{
+              return view('home');
+            }
+          }
+          else{
+            return view('auth/login');
+          }
     }
 }

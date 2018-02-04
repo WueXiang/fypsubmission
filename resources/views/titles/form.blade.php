@@ -29,9 +29,9 @@
         </div>
     </div>
     <?php
-                $user_id = Auth::user()->id;
+                $user_id = Auth::id();
     ?>
-    {!! Form::hidden('supervisor_id', $user , null, array('placeholder' => '----------------','class' => 'form-control')) !!}
+    {!! Form::hidden('supervisor_id', $user_id , null, array('placeholder' => '----------------','class' => 'form-control')) !!}
 
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
     <button type="submit" class="btn btn-primary">Submit</button>

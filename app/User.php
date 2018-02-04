@@ -27,6 +27,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $casts = [
+        'is_admin' => 'boolean',
+        'is_lecturer' => 'boolean',
+    ];
+    
+    public function isAdmin()
+    {
+        return $this->admin; // this looks for an admin column in your users table
+    }
+
+    public function isLecturer()
+    {
+        return $this->lecturer; // this looks for an admin column in your users table
+    }
     // public function fyp()
     // {
     //     return $this->hasOne('App\Fyp');

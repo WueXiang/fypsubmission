@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+
+use App\Title;
+use App\Report;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,33 +20,48 @@ use Illuminate\Http\Request;
 // });
 
 Route::get('/', function () {
-    return view('main');
+    return view('home');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
+// Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
 Route::prefix('admin')->group(function(){
-    Route::get('/', 'AdminController@index')->name('admin.dashboard');
-    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+    // Route::get('/', 'AdminController@index')->name('admin.dashboard');
+    // Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    // Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    // Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 });
 
-Route::prefix('lecturer')->group(function(){
-    Route::get('/', 'LecturerController@index')->name('lecturer.dashboard');
-    Route::get('/login', 'Auth\LecturerLoginController@showLoginForm')->name('lecturer.login');
-    Route::post('/login', 'Auth\LecturerLoginController@login')->name('lecturer.login.submit');
-    Route::get('/report', function () {
+// Route::prefix('lecturer')->group(function(){
+    // Route::get('/', 'LecturerController@index')->name('lecturer.dashboard');
+    // Route::get('/login', 'Auth\LecturerLoginController@showLoginForm')->name('lecturer.login');
+    // Route::post('/login', 'Auth\LecturerLoginController@login')->name('lecturer.login.submit');
+    Route::get('lecturer', function () {
+        return view('lecturer');
+    });
+    Route::get('lecturer/supervisor', function () {
+        $titles=App\Title::where("supervisor_id", "=", Auth::id())->get();
+        return view('titles/index');
+    });
+    Route::get('lecturer/moderator', function () {
+        $titles=App\Title::where("moderator_id", "=", Auth::id())->get();
+        return view('titles/index');
+    });
+
+    Route::get('/lecturer/report', function () {
         return view('report');
     });
-});
 
+    // Route::resource('titles','TitleController');
+// });
 
-//features
 Route::prefix('student')->group(function(){
+    Route::get('/', function () {
+        return view('student');
+    });
     Route::prefix('meetinglog')->group(function(){
         Route::get('/', function () {
             $meetinglog = \App\Meetinglog::all();
@@ -73,7 +91,7 @@ Route::prefix('student')->group(function(){
             return redirect('student/meetinglog/');
         });
     });
-    Route::resource('titles','TitleController');
+
     Route::get('title/show', function () {
         return view('student/titles/show');
     });
@@ -102,13 +120,18 @@ Route::prefix('student')->group(function(){
             $request->request->add(['filename' => $codename]);
             $request->request->add(['original_filename' => $filename]);
             $request->request->add(['fyp_id' => $fyppart->id]);
+            // $request->request->add(['id' => $fyppart->id]);
+            
             $data = $request->validate([
+                // 'id' => 'required',
                 'fyp_id' => 'required',
                 'filename'=>'required',
                 'original_filename'=>'required',
             ]);
+            // $report = App\Report::updateOrCreate(['id' => $fyppart->id]);
             $report = tap(new App\Report($data))->save();
-            return redirect('student/report');
+
+            return view('student/report');
         }
     });
 
@@ -117,6 +140,10 @@ Route::prefix('student')->group(function(){
         return response()->download($path);
     });
 });
+
+Route::resource('titles','TitleController');
+
+
 
 // Route::prefix('titles')->group(function(){
     
@@ -128,16 +155,18 @@ Route::prefix('student')->group(function(){
     //     $project = \App\Project::where('id', '=', $id)->get();
     //     return view('projects/detail')->with('project', $project[0]);
 // });
+Route::get('protected', ['middleware' => ['auth', 'admin'], function() {
+    return Auth::user()->isAdmin();
+}]);
 
 
+// Route::get('/upload', function () {
+//     return view('upload');
+// });
 
-Route::get('/upload', function () {
-    return view('upload');
-});
+// Route::post('upload', 'UploadController@upload');
 
-Route::post('upload', 'UploadController@upload');
-
-Route::post('store','uploadController@store');
+// Route::post('store','uploadController@store');
 
 
 

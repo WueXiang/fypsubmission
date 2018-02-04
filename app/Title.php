@@ -23,7 +23,7 @@ class Title extends Model
 
     protected $fillable = [
 
-        'title', 'type', 'specialization'
+        'title', 'type', 'specialization', 'supervisor_id',
 
     ];
 

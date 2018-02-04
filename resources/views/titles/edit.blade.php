@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
-
 @section('content')
-
+<div class="container">
     <div class="row">
 
-        <div class="col-lg-12 margin-tb">
+        <div {{-- class="col-lg-2 margin-tb" --}}>
 
             <div class="pull-left">
 
@@ -13,7 +12,7 @@
 
             </div>
 
-            <div class="pull-right">
+            <div style="float:right">
 
                 <a class="btn btn-primary" href="{{ route('titles.index') }}"> Back</a>
 
@@ -51,5 +50,5 @@
 
     {!! Form::close() !!}
 
-
+</div>
 @endsection

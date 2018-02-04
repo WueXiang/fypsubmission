@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-
 @section('content')
-
+<div class="container">
     <div class="row">
 
         <div class="col-lg-12 margin-tb">
@@ -47,14 +46,14 @@
         </tr>
 
         <?php
-            $user = App\Lecturer::find(Auth::user()->id);
+            $user = App\User::find(Auth::user()->id);
             $titles = App\Title::where("supervisor_id", "=", $user->id)->get();
-          ?>
+        ?>
     @foreach ($titles as $title)
 
     <tr>
 
-{{--         <td>{{ ++$i }}</td> --}}
+        <td>{{ $title->id }}</td>
         <td>{{ $title->title}}</td>
         <td>{{ $title->type}}</td>
         <td>{{ $title->specialization}}</td>
@@ -78,7 +77,7 @@
 
     </table>
 
-
+</div>
 {{--     {!! $titles->links() !!} --}}
 
 @endsection

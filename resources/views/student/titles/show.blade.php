@@ -5,12 +5,20 @@
     $user = App\User::find(Auth::user()->id);
     $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
     $title = App\Title::where("id", "=", $fyp->title_id)->first();
-    $supervisor = App\Lecturer::where("id", "=", $title->supervisor_id)->first();
-    $moderator = App\Lecturer::where("id", "=", $title->moderator_id)->first();
-    $co_supervisor = App\Lecturer::where("id", "=", $title->co_supervisor_id)->first();
+    $supervisor = App\User::where("id", "=", $title->supervisor_id)->first();
+    $moderator = App\User::where("id", "=", $title->moderator_id)->first();
+    if ($moderator === null) {
+        $moderator_name = "not available";
+        $moderator_email = "";
+    }
+    else{
+        $moderator_name = $moderator->name;
+        $moderator_email = $moderator->email;
+    }
+    $co_supervisor = App\User::where("id", "=", $title->co_supervisor_id)->first();
     if ($co_supervisor === null) {
         $co_supervisor_name = "not available";
-        $co_supervisor_email = "not available";
+        $co_supervisor_email = "";
     }
 ?>
     <div class="container">
@@ -23,7 +31,7 @@
                           <p><label>Type</label><br>{{$title->type}}</p>
                           <p><label>Specialization</label><br>{{$title->specialization}}</p>
                           <p><label>Supervisor</label><br>{{$supervisor->name}}<br>{{$supervisor->email}}</p>
-                          <p><label>Moderator</label><br>{{$moderator->name}}<br>{{$moderator->email}}</p>
+                          <p><label>Moderator</label><br>{{$moderator_name}}<br>{{$moderator_email}}</p>
                         </div>
                     </div>
                 </div>

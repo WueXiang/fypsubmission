@@ -83,9 +83,7 @@ class TitleController extends Controller
 
         Title::create($request->all());
 
-        return redirect()->route('titles.index')
-
-                        ->with('success','Title created successfully');
+        return redirect()->route('titles.index')->with('success','Title created successfully');
 
     }
 
