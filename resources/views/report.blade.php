@@ -66,7 +66,7 @@
         <h1>File Upload</h1>
         <label>Select file to upload:</label>
         <div class="uploader" style=" position:absolute;">
-          <div class = "wrapper" style="position:relative;float: left; min-width: 50%;max-width: 50%;">
+          <div class = "wrapper" style="position:relative;float: left; min-width: 50%;">
             <form class="dropzone" action = "report" method="POST" enctype="multipart/form-data">
 {{--               <input type="hidden" name="_method" value="PUT"> --}}
               <button class="dropzone-btn">Upload a file</button>

@@ -14,24 +14,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $user = App\User::find(Auth::user()->id);
-                                    $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-                                    $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
-                                    $meetinglog = App\Meetinglog::where("fyp_id", "=", $fyppart->id)->get();
-                                    ?>
-                                     @foreach ($meetinglog as $item)
-                                     
+                                     @foreach ($meetinglogs as $meetinglog)
                                       <tr>
-                                          <td><a href="meetinglog/index/{{$item->id}}"> {{$item->id }} </a></td>
-                                          <td><a href="meetinglog/index/{{$item->id}}"> {{$item->meeting_date}} </a></td>
+                                          <td><a href="/index/{{$meetinglog->id}}"> {{$meetinglog->id }} </a></td>
+                                          <td><a href="/index/{{$meetinglog->id}}"> {{$meetinglog->meeting_date}} </a></td>
                                       </tr>
                                      @endforeach
                                </tbody>
                             </table>
-                            <form action="meetinglog/create">
-                                <input type="submit" value="New Submission" />
-                            </form>
                         </div>
                     </div>
                 </div>

@@ -17,8 +17,8 @@ class CreateReportsTable extends Migration {
             $table->increments('id');
             $table->string('filename')->nullable();
             // $table->string('mime');
-            $table->string('original_filename')->nullable();
-            $table->integer('fyp_id')->unsigned()->nullable();
+            $table->string('comment')->nullable();
+            $table->bigInteger('fyp_id')->unsigned()->nullable();
             // $table->foreign('fyp_id')->references('id')->on('fypparts');
             $table->timestamps();
         });

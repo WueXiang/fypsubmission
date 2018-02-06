@@ -21,7 +21,6 @@
                                     $meetinglog = App\Meetinglog::where("fyp_id", "=", $fyppart->id)->get();
                                     ?>
                                      @foreach ($meetinglog as $item)
-                                     
                                       <tr>
                                           <td><a href="meetinglog/index/{{$item->id}}"> {{$item->id }} </a></td>
                                           <td><a href="meetinglog/index/{{$item->id}}"> {{$item->meeting_date}} </a></td>

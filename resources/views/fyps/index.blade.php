@@ -8,13 +8,13 @@
 
             <div class="pull-left">
 
-                <h2>Proposed Project Title</h2>
+                <h2>Enrolled Project</h2>
 
             </div>
 
             <div class="pull-right">
 
-                <a class="btn btn-success" href="{{ route('titles.create') }}"> Create New Title</a>
+                <a class="btn btn-success" href="{{ route('fyps.create') }}"> Enroll Student</a>
 
             </div>
 
@@ -37,20 +37,31 @@
 
         <tr>
 
-            <th>No</th>
+            <th>ID</th>
             <th>Title</th>
             <th>Type</th>
             <th>Specialization</th>
-            <th>Supervisor</th>
+            <th>Student</th>
+{{--             <th>Supervisor</th>
             <th>Co-supervisor</th>
-            <th>Moderator</th>
+            <th>Moderator</th> --}}
             <th width="280px">Action</th>
 
         </tr>
 
-    @foreach ($titles as $title)
+    @foreach ($fyps as $fyp)
     <?php
-    $supervisor = App\User::where("id", "=", $title->supervisor_id)->first();
+    $title = App\Title::where("id", "=", $fyp->title_id)->first();
+    $student = App\User::where("id", "=", $fyp->student_id)->first();
+    if ($student === null) {
+        $student_name = "not available";
+        $student_email = "";
+    }
+    else{
+        $student_name = $student->name;
+        $student_email = $student->email;
+    }
+    $supervisor = App\User::where("id", "=", $fyp->supervisor_id)->first();
     if ($supervisor === null) {
         $supervisor_name = "not available";
         $supervisor_email = "";
@@ -59,7 +70,7 @@
         $supervisor_name = $supervisor->name;
         $supervisor_email = $supervisor->email;
     }
-    $moderator = App\User::where("id", "=", $title->moderator_id)->first();
+    $moderator = App\User::where("id", "=", $fyp->moderator_id)->first();
     if ($moderator === null) {
         $moderator_name = "not available";
         $moderator_email = "";
@@ -68,7 +79,7 @@
         $moderator_name = $moderator->name;
         $moderator_email = $moderator->email;
     }
-    $co_supervisor = App\User::where("id", "=", $title->co_supervisor_id)->first();
+    $co_supervisor = App\User::where("id", "=", $fyp->co_supervisor_id)->first();
     if ($co_supervisor === null) {
         $co_supervisor_name = "not available";
         $co_supervisor_email = "";
@@ -80,23 +91,24 @@
     ?>
     <tr>
 
-        <td>{{ $title->id }}</td>
+        <td>{{ $fyp->id }}</td>
         <td>{{ $title->title}}</td>
         <td>{{ $title->type}}</td>
         <td>{{ $title->specialization}}</td>
-        <td>{{ $supervisor_name}}</td>
+        <td>{{ $student_name}}</td>
+{{--         <td>{{ $supervisor_name}}</td>
         <td>{{ $co_supervisor_name}}</td>
-        <td>{{ $moderator_name}}</td>
+        <td>{{ $moderator_name}}</td> --}}
 
 
 
         <td>
 
-            <a class="btn btn-info" href="{{ route('titles.show',$title->id) }}">Show</a>
+            <a class="btn btn-info" href="{{ route('fyps.show',$fyp->id) }}">Show</a>
 
-            <a class="btn btn-primary" href="{{ route('titles.edit',$title->id) }}">Edit</a>
+            <a class="btn btn-primary" href="{{ route('fyps.edit',$fyp->id) }}">Edit</a>
 
-            {!! Form::open(['method' => 'DELETE','route' => ['titles.destroy', $title->id],'style'=>'display:inline']) !!}
+            {!! Form::open(['method' => 'DELETE','route' => ['fyps.destroy', $fyp->id],'style'=>'display:inline']) !!}
 
             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
 
@@ -111,6 +123,6 @@
     </table>
 
 </div>
-{{--     {!! $titles->links() !!} --}}
+{{--     {!! $fyps->links() !!} --}}
 
 @endsection

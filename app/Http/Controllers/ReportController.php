@@ -6,11 +6,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Title;
+use App\Report;
+use App\Fyppart;
 use App\User;
 
 
-class TitleController extends Controller
+class ReportController extends Controller
 
 {
 
@@ -28,9 +29,9 @@ class TitleController extends Controller
 
     {
 
-        $titles = Title::latest()->paginate(10);
+        $reports = Report::latest()->paginate(10);
 
-        return view('titles.index',compact('titles'))
+        return view('reports.index',compact('reports'))
 
             ->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -52,9 +53,9 @@ class TitleController extends Controller
     {
 
         $lecturers = \DB::table('users')->where('lecturer', '=', '1')->pluck('name','id');
-        return view('titles.create')->with('lecturers', $lecturers);
+        return view('reports.create')->with('lecturers', $lecturers);
         //original
-        // return view('titles.create');
+        // return view('reports.create');
 
     }
 
@@ -77,7 +78,7 @@ class TitleController extends Controller
 
         request()->validate([
 
-            'title' => 'required',
+            'report' => 'required',
             'type' => 'required',
             'specialization' => 'required',
             'supervisor_id' => 'required',
@@ -86,9 +87,9 @@ class TitleController extends Controller
 
         ]);
 
-        Title::create($request->all());
+        Report::create($request->all());
 
-        return redirect()->route('titles.index')->with('success','Title created successfully');
+        return redirect()->route('reports.index')->with('success','Report created successfully');
 
     }
 
@@ -109,9 +110,9 @@ class TitleController extends Controller
 
     {
         $students = User::where('student','=','1')->pluck('name','id');
-        $title = Title::find($id);
+        $report = Report::find($id);
 
-        return view('titles.show',compact('title'))->with('students',$students);
+        return view('reports.show',compact('report'))->with('students',$students);
 
     }
 
@@ -133,8 +134,8 @@ class TitleController extends Controller
     {
         $lecturers = \DB::table('users')->where('lecturer', '=', '1')->pluck('name','id');
         
-        $title = Title::find($id);
-        return view('titles.edit',compact('title'))->with('lecturers', $lecturers);
+        $report = Report::find($id);
+        return view('reports.edit',compact('report'))->with('lecturers', $lecturers);
         
     }
 
@@ -159,19 +160,15 @@ class TitleController extends Controller
 
         request()->validate([
 
-            'title' => 'required',
-            'type' => 'required',
-            'specialization' => 'required',
-            'supervisor_id' => 'required',
-            'co_supervisor_id' => 'nullable',
-            'moderator_id' => 'nullable',
+            'comment' => 'required',
         ]);
 
-        Title::find($id)->update($request->all());
+        Report::find($id)->update($request->all());
 
-        return redirect()->route('titles.index')
+        $report = Report::find($id);
+        $fyppart = Fyppart::where('id','=',$report->fyp_id)->first();
 
-                        ->with('success','Title updated successfully');
+        return view('lecturer/report')->with('report',$report)->with('fyppart',$fyppart)->with('success','Comment updated successfully');
 
     }
 
@@ -192,11 +189,11 @@ class TitleController extends Controller
 
     {
 
-        Title::find($id)->delete();
+        Report::find($id)->delete();
 
-        return redirect()->route('titles.index')
+        return redirect()->route('reports.index')
 
-                        ->with('success','Title deleted successfully');
+                        ->with('success','Report deleted successfully');
 
     }
 

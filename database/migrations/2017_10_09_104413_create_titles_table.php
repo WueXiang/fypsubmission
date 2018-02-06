@@ -46,7 +46,7 @@ class CreateTitlesTable extends Migration
             'type' => 'Project',
             'specialization'=> 'GD',
             'supervisor_id' => '1111111111',
-            'moderator_id' => '2222222222'
+            'moderator_id' => '1212121212'
         ]);
         DB::table('titles')->insert(
         [
@@ -55,7 +55,7 @@ class CreateTitlesTable extends Migration
             'type' => 'Research',
             'specialization'=> 'SE',
             'supervisor_id' => '1111111111',
-            'moderator_id' => '2222222222'
+            'moderator_id' => '1212121212'
         ]);
         DB::table('titles')->insert(
         [
@@ -63,7 +63,7 @@ class CreateTitlesTable extends Migration
             'title' => 'Emotion Simulator',
             'type' => 'Research',
             'specialization'=> 'DS',
-            'supervisor_id' => '2222222222',
+            'supervisor_id' => '1212121212',
             'moderator_id' => '1111111111'
         ]);
         DB::table('titles')->insert(
@@ -72,7 +72,7 @@ class CreateTitlesTable extends Migration
             'title' => 'WiFi Range Extender',
             'type' => 'Project',
             'specialization'=> 'IS',
-            'supervisor_id' => '2222222222',
+            'supervisor_id' => '1212121212',
             'moderator_id' => '1111111111'
         ]);
 

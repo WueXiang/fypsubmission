@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+@if (Auth::check())
+  @if ((Auth::user()->student == '0')&&( Auth::user()->lecturer == '0')&&( Auth::user()->admin == '0'))
+    <br><h1>Your request is pending, please wait for approval from adminstrative.</h1>          
+  @endif
+@endif
 
-<div class="container">
+{{-- <div class="container">  
           <div class="row">
             <div class="col-sm">
               <h3>Login as:</h3>
@@ -23,5 +28,5 @@
               <h3>Admin</h3>
             </a>
           </div>
-        </div>
+        </div> --}}
 @endsection

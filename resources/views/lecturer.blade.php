@@ -20,9 +20,6 @@
             </div>
         </div>
     </div>
-    <?php
-    $user_id = Auth::id();
-    ?>
     <div style="position:relative; left:50%; transform:translate(-50%,0);">
       <a href="lecturer/supervisor">
         <div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align:center;background-color:#7b5eff;color:white;display:inline-block;min-height:350px">

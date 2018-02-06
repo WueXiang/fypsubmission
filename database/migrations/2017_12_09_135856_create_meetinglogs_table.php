@@ -20,7 +20,7 @@ class CreateMeetinglogsTable extends Migration
 	      	$table->longtext('work_to_be_done');
 	      	$table->longtext('problem_encountered');
             $table->longtext('comment')->nullable();
-            $table->integer('fyp_id')->unsigned()->default('000000');
+            $table->bigInteger('fyp_id')->unsigned()->default('000000');
             // $table->foreign('fyp_id')->references('id')->on('fypparts');
 	      	$table->timestamps();
 		});
@@ -39,9 +39,9 @@ class CreateMeetinglogsTable extends Migration
         [
             'id'=> '11112223',
             'meeting_date' => '2018-01-11',
-            'work_done' => 'google',
-            'work_to_be_done' => 'google again',
-            'problem_encountered' => 'dont know what to search in google',
+            'work_done' => 'google again',
+            'work_to_be_done' => 'this time try yahoo?',
+            'problem_encountered' => 'no result in google',
             'fyp_id' => '11112222',
         ]);
 

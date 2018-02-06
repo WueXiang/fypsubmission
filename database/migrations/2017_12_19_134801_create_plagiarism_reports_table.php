@@ -12,14 +12,13 @@ class CreatePlagiarismReportsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('plagiarism_reports', function(Blueprint $table)
+        Schema::create('plagiarismreports', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('filename');
             // $table->string('mime');
-            $table->string('original_filename');
-            $table->integer('fyp_id')->unsigned();
-            $table->foreign('fyp_id')->references('id')->on('fypparts');
+            $table->bigInteger('fyp_id')->unsigned();
+            // $table->foreign('fyp_id')->references('id')->on('fypparts');
             $table->timestamps();
         });
     }
@@ -31,7 +30,7 @@ class CreatePlagiarismReportsTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('plagiarism_reports');
+        Schema::drop('plagiarismreports');
  
     }
  

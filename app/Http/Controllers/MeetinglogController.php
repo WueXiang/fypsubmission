@@ -6,11 +6,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Title;
+use App\Meetinglog;
 use App\User;
 
 
-class TitleController extends Controller
+class MeetinglogController extends Controller
 
 {
 
@@ -28,9 +28,9 @@ class TitleController extends Controller
 
     {
 
-        $titles = Title::latest()->paginate(10);
+        $meetinglogs = Meetinglog::latest()->paginate(20);
 
-        return view('titles.index',compact('titles'))
+        return view('meetinglogs.index',compact('meetinglogs'))
 
             ->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -52,9 +52,9 @@ class TitleController extends Controller
     {
 
         $lecturers = \DB::table('users')->where('lecturer', '=', '1')->pluck('name','id');
-        return view('titles.create')->with('lecturers', $lecturers);
+        return view('meetinglogs.create')->with('lecturers', $lecturers);
         //original
-        // return view('titles.create');
+        // return view('meetinglogs.create');
 
     }
 
@@ -77,7 +77,7 @@ class TitleController extends Controller
 
         request()->validate([
 
-            'title' => 'required',
+            'meetinglog' => 'required',
             'type' => 'required',
             'specialization' => 'required',
             'supervisor_id' => 'required',
@@ -86,9 +86,9 @@ class TitleController extends Controller
 
         ]);
 
-        Title::create($request->all());
+        Meetinglog::create($request->all());
 
-        return redirect()->route('titles.index')->with('success','Title created successfully');
+        return redirect()->route('meetinglogs.index')->with('success','Meetinglog created successfully');
 
     }
 
@@ -108,11 +108,10 @@ class TitleController extends Controller
     public function show($id)
 
     {
-        $students = User::where('student','=','1')->pluck('name','id');
-        $title = Title::find($id);
+        $meetinglogs = Meetinglog::where('fyp_id','=',$id)->get();
+        // $meetinglog = Meetinglog::find($id);
 
-        return view('titles.show',compact('title'))->with('students',$students);
-
+        return view('meetinglogs.show')->with('meetinglogs',$meetinglogs);
     }
 
 
@@ -133,8 +132,8 @@ class TitleController extends Controller
     {
         $lecturers = \DB::table('users')->where('lecturer', '=', '1')->pluck('name','id');
         
-        $title = Title::find($id);
-        return view('titles.edit',compact('title'))->with('lecturers', $lecturers);
+        $meetinglog = Meetinglog::find($id);
+        return view('meetinglogs.edit',compact('meetinglog'))->with('lecturers', $lecturers);
         
     }
 
@@ -159,19 +158,19 @@ class TitleController extends Controller
 
         request()->validate([
 
-            'title' => 'required',
-            'type' => 'required',
-            'specialization' => 'required',
-            'supervisor_id' => 'required',
-            'co_supervisor_id' => 'nullable',
-            'moderator_id' => 'nullable',
+            // 'meeting_date' => 'required|max:255',
+            // 'work_done' => 'required|max:255',
+            // 'work_to_be_done' => 'required|max:255',
+            // 'problem_encountered' => 'max:255',
+            // 'fyp_id' => 'required',
+            'comment' => 'required',
         ]);
 
-        Title::find($id)->update($request->all());
+        Meetinglog::find($id)->update($request->all());
 
-        return redirect()->route('titles.index')
+        $meetinglog = Meetinglog::find($id);
 
-                        ->with('success','Title updated successfully');
+        return view('lecturer/meetinglogs/detail')->with('meetinglog',$meetinglog)->with('success','Comment updated successfully');
 
     }
 
@@ -192,11 +191,11 @@ class TitleController extends Controller
 
     {
 
-        Title::find($id)->delete();
+        Meetinglog::find($id)->delete();
 
-        return redirect()->route('titles.index')
+        return redirect()->route('meetinglogs.index')
 
-                        ->with('success','Title deleted successfully');
+                        ->with('success','Meetinglog deleted successfully');
 
     }
 

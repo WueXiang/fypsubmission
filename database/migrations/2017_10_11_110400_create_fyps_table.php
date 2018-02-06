@@ -14,7 +14,7 @@ class CreateFypsTable extends Migration
     public function up()
     {
         Schema::create('fyps', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('student_id')->unsigned();
             // $table->foreign('student_id')->references('id')->on('users');
             $table->integer('title_id')->unsigned();

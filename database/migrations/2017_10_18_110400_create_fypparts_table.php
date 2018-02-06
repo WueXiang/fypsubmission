@@ -14,8 +14,8 @@ class CreateFypPartsTable extends Migration
     public function up()
     {
         Schema::create('fypparts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('fyp_id')->unsigned();
+            $table->bigIncrements('id');
+            $table->bigInteger('fyp_id')->unsigned();
             // $table->foreign('fyp_id')->references('id')->on('fyps');
             $table->integer('part');
             $table->string('supervisor_mark')->nullable();

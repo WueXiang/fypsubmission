@@ -55,25 +55,20 @@
 
     <meta http-equiv="refresh" content="100">
   </head>
-  <?php
-    $user = App\User::find(Auth::user()->id);
-    $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-    $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
-  ?>
   <body>
     <div class="container">
       <div class="content" style=" position:relative; float: left; min-width: 50%;">        
         <h1>File Upload</h1>
         <label>Select file to upload:</label>
         <div class="uploader" style=" position:absolute;">
-          <div class = "wrapper" style="position:relative;float: left; min-width: 50%;max-width: 50%;">
-            <form class="dropzone" action = "report" method="POST" enctype="multipart/form-data">
+          <div class = "wrapper" style="position:relative;float: left; min-width: 50%;">
+            <form class="dropzone" action = "plagiarismreport/" method="POST" enctype="multipart/form-data">
 {{--               <input type="hidden" name="_method" value="PUT"> --}}
               <button class="dropzone-btn">Upload a file</button>
               <input id = "dropzone-input" type="file" name="file" accept="application/pdf"/>
 
               <button class = "submit">Submit</button>
-              <input type="checkbox" name="signature" required> I agree that this submission file will be taken as final submission if no more submission after this before duedate.<br>
+              <input type="hidden" value={{$fyppart->id}} name="fyppart_id">
               <input type="hidden" value="{{ csrf_token() }}" name="_token">
             </form>
           </div>
@@ -83,25 +78,13 @@
               $('.dropzone .dropzone-btn').text(filename);
             });
           </script>
-                  {{-- <span>
-            <form action='new_report' class="dropzone" id="my-awesome-dropzone" method="post" enctype="multipart/form-data" style="width:500px; height:45%;">
-              <input type="hidden" value="{{ csrf_token() }}" name="_token">
-            </form>
-          </span>
-          <span>
-            <form action="new_report" method="post" enctype="multipart/form-data">
-              <input type="file" name="file" id="file"><br>
-              <input type="checkbox" name="signature" required> I agree that this submission file will be taken as final submission if no more submission after this before duedate. <br>
-              <input type="submit" value="Upload" name="submit">
-              <input type="hidden" value="{{ csrf_token() }}" name="_token">
-            </form>
-          </span>  --}}           
+  
         </div>
       </div>
       <div class="content" style="position:relative; float: left; min-width: 50%;">
         <div><h4>Submitted file</h5>
         <?php
-          echo '<iframe src= "reports/'.$fyppart->id.'.pdf", width="100%" style="height:80vh"></iframe>';   
+          echo '<iframe src= "plagiarismreports/'.$fyppart->id.'.pdf", width="100%" style="height:80vh"></iframe>';   
         ?>
         </div>
       </div>
