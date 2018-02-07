@@ -79,8 +79,8 @@
       @endif
               <div class="col-sm-4" style="background-color:#7b5eff;color:white; height:300px;">
                 <h3><strong>PlagiarismReport</strong></h3>        
-                <p style="font-size: 30px;">{{$report_status}}</p>
-                <p>Report submission duedate on week 12 </p>
+                <p style="font-size: 30px;">{{$plagiarismreport_status}}</p>
+                <p>Report submission duedate on week 13 </p>
               </div>
       @if (App\Report::where("fyp_id", "=", $fyppart->id)->count()>0)
       </a>

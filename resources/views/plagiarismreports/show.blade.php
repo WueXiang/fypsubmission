@@ -54,16 +54,17 @@
     @endif
 
     <div class="container">
-        <div class="row" style="display:flex;">
-{{--             <div class="col-md-8 col-md-offset-2">
- --}}           <div class="panel panel-default" style="float:left; min-width:40% ">
+        <div class="row">
+            <div {{-- class="col-md-8 col-md-offset-2" --}}>
+                <div class="panel panel-default" style="float:left; width:40% ">
                     <div class="panel-heading">Final Year Project no.{{$title->id}}</div>
-                    <div class="title" style=" margin: 30px;">
+                        <div class="title" style=" margin: 30px;">
                             <p><label>Title</label><br>{{$title->title}}</p>
                             <p><label>Type</label><br>{{$title->type}}</p>
                             <p><label>Specialization</label><br>{{$title->specialization}}</p>
                             <p><label>Supervisor</label><br>{{$supervisor_name}}<br>{{$supervisor_email}}</p>
                             <p><label>Moderator</label><br>{{$moderator_name}}<br>{{$moderator_email}}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -83,7 +84,7 @@
                                     $id = $fyp->id;                                  
                             ?>
                             <a href="{{ route('fyps.show',$fyp->id) }}">
-                            <div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align:center;background-color:#7b5eff;color:white;display:inline-block;min-height:100px;min-width:300px;float:left;margin:25px;">
+                            <div class = "col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align:center;background-color:#7b5eff;color:white;display:inline-block;min-height:100px;min-width:300px;float:left;margin:30px;">
                               <h3><strong>{{$fyp_student_name}}</strong></h3>
                               <p>{{$fyp_student_id}}<br>{{$fyp_student->email}}</p>
                             </div></a>
@@ -92,12 +93,11 @@
                             @endif
 
                             @if ($fyps->count() < 2)
-                            <div style="margin-left:25px;margin-right:25px; ">
                             {!! Form::model($fyps, ['method' => 'POST','route' => ['fyps.store']]) !!}
                             {!! Form::label('Enroll Student') !!}<br/>
                             {!! Form::select('student_id', $students, null, array('placeholder' => '----------------','class' => 'form-control')) !!}
                             {!! Form::hidden('title_id', $title->id , null, array('placeholder' => '----------------','class' => 'form-control')) !!}
-                            <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="margin-top:20px;">
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                             {!! Form::close() !!}
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-{{--             </div> --}}
+            </div>
         </div>        
     </div>
 

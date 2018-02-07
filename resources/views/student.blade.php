@@ -79,7 +79,7 @@
                 <p>Requirement minimum six meeting logs to be submitted</p>
               </div>
             </a>
-            <a href="student/report">
+            <a href="{{route('reports.create',$fyppart->id)}}">
               <div class="col-sm-4" style="background-color:#31e3fd;color:white;height:300px;">
               <h3><strong>Report</strong></h3>        
               <p style="font-size: 30px;">{{$report_status}}</p>

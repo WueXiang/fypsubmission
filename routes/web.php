@@ -101,45 +101,42 @@ Route::prefix('student')->group(function(){
     Route::get('/report', function () {
         return view('student/report');
     });
-    Route::post('report', function (Request $request) {
+    // Route::post('report', function (Request $request) {
 
-        $user = App\User::find(Auth::user()->id);
-        $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-        $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
-        $file=request()->file('file');
-        $filename = $file->getClientOriginalName();
-        // $ext=$file->guessClientExtension();
-        // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $destination = 'student/reports/';
-        $codename= ''.$fyppart->id.'.pdf';
-        $allowed= array('pdf');
-        if( ! in_array( $ext, $allowed ) ) {
-            echo 'File format error: Only support pdf format.';
-        }
-        else{
-            // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
-            $file->move($destination, $codename);
-            $request->request->add(['filename' => $codename]);
-            $request->request->add(['fyp_id' => $fyppart->id]);
-            // $request->request->add(['id' => $fyppart->id]);
+    //     $user = App\User::find(Auth::user()->id);
+    //     $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+    //     $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
+    //     $file=request()->file('file');
+    //     $filename = $file->getClientOriginalName();
+    //     // $ext=$file->guessClientExtension();
+    //     // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
+    //     $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    //     $destination = 'student/reports/';
+    //     $codename= ''.$fyppart->id.'.pdf';
+    //     $allowed= array('pdf');
+    //     if( ! in_array( $ext, $allowed ) ) {
+    //         echo 'File format error: Only support pdf format.';
+    //     }
+    //     else{
+    //         // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
+    //         $file->move($destination, $codename);
+    //         $request->request->add(['filename' => $codename]);
+    //         $request->request->add(['fyp_id' => $fyppart->id]);
+    //         // $request->request->add(['id' => $fyppart->id]);
             
-            $data = $request->validate([
-                // 'id' => 'required',
-                'fyp_id' => 'required',
-                'filename'=>'required',
-            ]);
-            // $report = App\Report::updateOrCreate(['id' => $fyppart->id]);
-            $report = tap(new App\Report($data))->save();
+    //         $data = $request->validate([
+    //             // 'id' => 'required',
+    //             'fyp_id' => 'required',
+    //             'filename'=>'required',
+    //         ]);
+    //         // $report = App\Report::updateOrCreate(['id' => $fyppart->id]);
+    //         $report = tap(new App\Report($data))->save();
 
-            return view('student/report');
-        }
-    });
+    //         return view('student/report');
+    //     }
+    // });
 
-    Route::post('/report_download', function (Request $request) {   
-        $path = 'D:\\xampp\\htdocs\\fypsubmission\\public\\reports\\'.$fyppart_id->id.'.'.$ext.'';
-        return response()->download($path);
-    });
+    
 });
 
 Route::resource('titles','TitleController');
@@ -154,6 +151,8 @@ Route::resource('reports','ReportController');
 
 Route::resource('plagiarismreports','PlagiarismReportController');
 
+
+
 Route::get('/index/{id}', function ($id) {
     $meetinglog = \App\Meetinglog::where('id', '=', $id)->first();
     return view('lecturer/meetinglogs/detail')->with('meetinglog', $meetinglog);
@@ -166,46 +165,57 @@ Route::get('/report/{id}', function ($id) {
 });
 
 Route::get('/plagiarismreport/{id}', function ($id) {
+    // exit($id);
     $fyppart = \App\Fyppart::where('id', '=', $id)->first();
     $plagiarismreport = \App\PlagiarismReport::where('fyp_id', '=', $id)->first();
     return view('lecturer/plagiarismreport')->with('fyppart', $fyppart)->with('plagiarismreport', $plagiarismreport);
     exit('no problem yet');
 });
 
-Route::post('plagiarismreport/', function (Request $request) {
+Route::get('/report_download/{id}', function ($id) {   
+    $path = 'D:\\xampp\\htdocs\\fypsubmission\\public\\'.$id.'report.pdf';
+    return response()->download($path);
+});
 
-        $fyppart = App\Fyppart::where("fyp_id", "=", $request->fyppart_id)->first();
-        // exit($request->fyppart_id);
-        $file=request()->file('file');
-        $filename = $file->getClientOriginalName();
-        // $ext=$file->guessClientExtension();
-        // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        $destination = '/plagiarismreports/';
-        $codename= ''.$fyppart->id.'.pdf';
-        $allowed= array('pdf');
-        if( ! in_array( $ext, $allowed ) ) {
-            echo 'File format error: Only support pdf format.';
-        }
-        else{
-            // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
-            $file->move($destination, $codename);
-            $request->request->add(['filename' => $codename]);
-            $request->request->add(['fyp_id' => $fyppart->id]);
-            // $request->request->add(['id' => $fyppart->id]);
+Route::get('/plagiarismreport_download/{id}', function ($id) {   
+    $path = 'D:\\xampp\\htdocs\\fypsubmission\\public\\'.$id.'plagiarismreport.pdf';
+    return response()->download($path);
+});
+
+// Route::post('plagiarismreport/', function (Request $request) {
+
+//         $fyppart = App\Fyppart::where("fyp_id", "=", $request->fyppart_id)->first();
+//         // exit($request->fyppart_id);
+//         $file=request()->file('file');
+//         $filename = $file->getClientOriginalName();
+//         // $ext=$file->guessClientExtension();
+//         // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
+//         $ext = pathinfo($filename, PATHINFO_EXTENSION);
+//         $destination = '/plagiarismreports/';
+//         $codename= ''.$fyppart->id.'.pdf';
+//         $allowed= array('pdf');
+//         if( ! in_array( $ext, $allowed ) ) {
+//             echo 'File format error: Only support pdf format.';
+//         }
+//         else{
+//             // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
+//             $file->move($destination, $codename);
+//             $request->request->add(['filename' => $codename]);
+//             $request->request->add(['fyp_id' => $fyppart->id]);
+//             // $request->request->add(['id' => $fyppart->id]);
             
-            $data = $request->validate([
-                // 'id' => 'required',
-                'fyp_id' => 'required',
-                'filename'=>'required',
-            ]);
-            // $report = App\Report::updateOrCreate(['id' => $fyppart->id]);
-            $save = tap(new App\PlagiarismReport($data))->save();
+//             $data = $request->validate([
+//                 // 'id' => 'required',
+//                 'fyp_id' => 'required',
+//                 'filename'=>'required',
+//             ]);
+//             // $report = App\Report::updateOrCreate(['id' => $fyppart->id]);
+//             $save = tap(new App\PlagiarismReport($data))->save();
 
-            $plagiarismreport = \App\PlagiarismReport::where('fyp_id', '=', $id)->first();
-            return view('lecturer/plagiarismreport')->with('fyppart', $fyppart)->with('plagiarismreport', $plagiarismreport);
-                }
-    });
+//             $plagiarismreport = \App\PlagiarismReport::where('fyp_id', '=', $id)->first();
+//             return view('lecturer/plagiarismreport')->with('fyppart', $fyppart)->with('plagiarismreport', $plagiarismreport);
+//                 }
+//     });
 
 // Route::get('/titles/fyp/{id}', function ($id) {
 //     exit($id);

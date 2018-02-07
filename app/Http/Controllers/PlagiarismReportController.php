@@ -6,14 +6,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Report;
+use App\PlagiarismReport;
 use App\Fyp;
 use App\Fyppart;
 use App\User;
 use Auth;
 
 
-class ReportController extends Controller
+class PlagiarismReportController extends Controller
 
 {
 
@@ -31,11 +31,11 @@ class ReportController extends Controller
 
     {
 
-        $fypparts = Fyppart::latest()->paginate(10);
+        // $plagiarismreports = PlagiarismReport::latest()->paginate(10);
 
-        return view('reports.index',compact('fypparts'))
+        // return view('plagiarismreports.index',compact('plagiarismreports'))
 
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        //     ->with('i', (request()->input('page', 1) - 1) * 5);
 
     }
 
@@ -54,9 +54,9 @@ class ReportController extends Controller
 
     {
 
-        return view('reports.create');
+        return view('plagiarismreports.create');
         //original
-        // return view('reports.create');
+        // return view('plagiarismreports.create');
 
     }
 
@@ -76,17 +76,16 @@ class ReportController extends Controller
     public function store(Request $request)
 
     {   
-        // exit('something happened');
-        $user = User::find(Auth::user()->id);
-        $fyp = Fyp::where("student_id", "=", $user->id)->first();
-        $fyppart = Fyppart::where("fyp_id", "=", $fyp->id)->first();
+        // exit($request->fyppart_id);
+
+        $fyppart = Fyppart::where("fyp_id", "=", $request->fyppart_id)->first();
         $file=request()->file('file');
         $filename = $file->getClientOriginalName();
         // $ext=$file->guessClientExtension();
-        // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
+        // $file->storeAs('uploads/'.$fyp_id,"plagiarismreport.pdf");
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         // $destination = '/';
-        $codename= ''.$fyppart->id.'report.pdf';
+        $codename= ''.$fyppart->id.'plagiarismreport.pdf';
         $allowed= array('pdf');
         if( ! in_array( $ext, $allowed ) ) {
             echo 'File format error: Only support pdf format.';
@@ -103,10 +102,10 @@ class ReportController extends Controller
                 'fyp_id' => 'required',
                 'filename'=>'required',
             ]);
-            // $report = App\Report::updateOrCreate(['id' => $fyppart->id]);
-            $report = tap(new Report($data))->save();
+            // $plagiarismreport = App\PlagiarismReport::updateOrCreate(['id' => $fyppart->id]);
+            $plagiarismreport = tap(new PlagiarismReport($data))->save();
 
-            return redirect()->route('reports.create')->with('success','Report created successfully');
+            return view('lecturer/plagiarismreport')->with('fyppart',$fyppart)->with('success','PlagiarismReport created successfully');
         }
     }
 
@@ -127,9 +126,9 @@ class ReportController extends Controller
 
     {
         // $students = User::where('student','=','1')->pluck('name','id');
-        // $report = Report::find($id);
+        // $plagiarismreport = PlagiarismReport::find($id);
 
-        // return view('reports.show',compact('report'))->with('students',$students);
+        // return view('plagiarismreports.show',compact('plagiarismreport'))->with('students',$students);
 
     }
 
@@ -149,10 +148,8 @@ class ReportController extends Controller
     public function edit($id)
 
     {
-        $lecturers = \DB::table('users')->where('lecturer', '=', '1')->pluck('name','id');
-        
-        $report = Report::find($id);
-        return view('reports.edit',compact('report'))->with('lecturers', $lecturers);
+        $fyppart = Fyppart::where('id','=', $id)->first();
+        return view('plagiarismreports.create')->with('fyppart',$fyppart);
         
     }
 
@@ -180,12 +177,12 @@ class ReportController extends Controller
             'comment' => 'required',
         ]);
 
-        Report::find($id)->update($request->all());
+        PlagiarismReport::find($id)->update($request->all());
 
-        $report = Report::find($id);
-        $fyppart = Fyppart::where('id','=',$report->fyp_id)->first();
+        $plagiarismreport = PlagiarismReport::find($id);
+        $fyppart = Fyppart::where('id','=',$plagiarismreport->fyp_id)->first();
 
-        return view('lecturer/report')->with('report',$report)->with('fyppart',$fyppart)->with('success','Comment updated successfully');
+        return view('lecturer/plagiarismreport')->with('plagiarismreport',$plagiarismreport)->with('fyppart',$fyppart)->with('success','Comment updated successfully');
 
     }
 
@@ -206,11 +203,11 @@ class ReportController extends Controller
 
     {
 
-        Report::find($id)->delete();
+        PlagiarismReport::find($id)->delete();
 
-        return redirect()->route('reports.index')
+        return redirect()->route('plagiarismreports.index')
 
-                        ->with('success','Report deleted successfully');
+                        ->with('success','PlagiarismReport deleted successfully');
 
     }
 

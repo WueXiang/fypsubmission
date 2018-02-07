@@ -73,7 +73,7 @@
                 <p style="font-size: 20px;">{{$pending_request_count_status}}</p>
               </div>
             </a>
-            <a href="student/report">
+            <a href="{{ route('reports.index') }}">
               <div class="col-sm-4" style="background-color:#31e3fd;color:white;text-align:center;height:300px;">
               <h3><strong>Submission Management</strong></h3>        
               <p style="font-size: 20px;"></p>

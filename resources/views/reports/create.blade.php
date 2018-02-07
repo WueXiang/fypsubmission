@@ -104,7 +104,7 @@
       <div class="content" style="position:relative; float: left; min-width: 50%;">
         <div><h4>Submitted file</h5>
         <?php
-          echo '<iframe src= "/'.$fyppart->id.'.pdf", width="100%" style="height:80vh"></iframe>';   
+          echo '<iframe src= "/'.$fyppart->id.'report.pdf", width="100%" style="height:80vh"></iframe>';   
         ?>
         </div>
       </div>

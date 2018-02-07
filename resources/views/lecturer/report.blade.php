@@ -18,7 +18,7 @@
         <div class="panel panel-default" style="float:left; min-width: 50%;">
             <div class="panel-heading">Submitted File</div>
             <?php
-              echo '<iframe src= "student/reports/'.$fyppart->id.'.pdf", width="100%" style="height:75vh"></iframe>';   
+              echo '<iframe src= "/'.$fyppart->id.'report.pdf", width="100%" style="height:75vh"></iframe>';   
             ?>
         </div>
 
