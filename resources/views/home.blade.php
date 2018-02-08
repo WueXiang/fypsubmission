@@ -1,32 +1,88 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-@if (Auth::check())
-  @if ((Auth::user()->student == '0')&&( Auth::user()->lecturer == '0')&&( Auth::user()->admin == '0'))
-    <br><h1>Your request is pending, please wait for approval from adminstrative.</h1>          
-  @endif
-@endif
+        <title>Laravel</title>
 
-{{-- <div class="container">  
-          <div class="row">
-            <div class="col-sm">
-              <h3>Login as:</h3>
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Styles -->
+        <style>
+            html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 100;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .full-height {
+                height: 100vh;
+            }
+
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+
+            .position-ref {
+                position: relative;
+            }
+
+            .top-right {
+                position: absolute;
+                right: 10px;
+                top: 18px;
+            }
+
+            .content {
+                text-align: center;
+            }
+
+            .title {
+                font-size: 84px;
+            }
+
+            .links > a {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+
+            .m-b-md {
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="flex-center position-ref full-height">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <a href="{{ url('/home') }}">Home</a>
+                    @else
+                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('register') }}">Register</a>
+                    @endauth
+                </div>
+            @endif
+
+            <div class="content">
+                <div class="title m-b-md">
+                    FCI FYP Submission System
+                </div>
+
             </div>
-          </div>
-          <div class="row">
-            <a href="/student" class="col-sm-2" style="background-color:#7b5eff;color:white;">
-              <h3>Student</h3>
-            </a>
-          </div>
-          <div class="row">
-            <a href="/lecturer" class="col-sm-2" style="background-color:#ff3377;color:white;">
-              <h3>Lecturer</h3>
-            </a>
-          </div>
-          <div class="row">
-            <a href="/admin" class="col-sm-2" style="background-color:#31e3fd;color:white;">
-              <h3>Admin</h3>
-            </a>
-          </div>
-        </div> --}}
-@endsection
+        </div>
+    </body>
+</html>

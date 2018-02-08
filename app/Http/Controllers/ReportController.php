@@ -77,25 +77,24 @@ class ReportController extends Controller
 
     {   
         // exit('something happened');
-        $user = User::find(Auth::user()->id);
-        $fyp = Fyp::where("student_id", "=", $user->id)->first();
-        $fyppart = Fyppart::where("fyp_id", "=", $fyp->id)->first();
+        $fyppart_id = $request->fyppart_id;
         $file=request()->file('file');
         $filename = $file->getClientOriginalName();
         // $ext=$file->guessClientExtension();
         // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         // $destination = '/';
-        $codename= ''.$fyppart->id.'report.pdf';
+        $codename= ''.$fyppart_id.'report.pdf';
         $allowed= array('pdf');
         if( ! in_array( $ext, $allowed ) ) {
             echo 'File format error: Only support pdf format.';
         }
         else{
             // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
+            // exit(public_path());
             $file->move(public_path(), $codename);
             $request->request->add(['filename' => $codename]);
-            $request->request->add(['fyp_id' => $fyppart->id]);
+            $request->request->add(['fyp_id' => $fyppart_id]);
             // $request->request->add(['id' => $fyppart->id]);
             
             $data = $request->validate([

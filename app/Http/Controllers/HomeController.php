@@ -36,7 +36,8 @@ class HomeController extends Controller
               return view('student');
             }
             else{
-              return view('home');
+              // return view('home');
+              return view('auth/login');
             }
           }
           else{
@@ -83,7 +84,8 @@ class HomeController extends Controller
               return view('student')->with('rollback',$rollback);
             }
             else{
-              return view('home');
+              // return view('home');
+              return view('auth/login');
             }
           }
           else{

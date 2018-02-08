@@ -56,9 +56,43 @@
 {{--     <meta http-equiv="refresh" content="60"> --}}
   </head>
   <?php
-    $user = App\User::find(Auth::user()->id);
-    $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-    $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
+    use Carbon\Carbon;
+
+    if ( empty($rollback) ){
+      $rollback = '0';
+    }
+    $sem_one = App\Semester::where('part', '=', '1')->first();
+    $sem_one_start = $sem_one->start_date;
+    $sem_one_end = $sem_one->end_date;
+
+    $sem_two = App\Semester::where('part', '=', '2')->first();
+    $sem_two_start = $sem_two->start_date;
+    $sem_two_end = $sem_two->end_date;
+
+    $today = Carbon::today();
+    if (($today>=$sem_one_start)&&($today<$sem_two_start)){
+        $sem = '1';
+        $sem_start=$sem_one_start;
+        $sem_end=$sem_one_end;
+        $date = new DateTime($sem_one_end);
+        $now = new DateTime();
+        $day_left=$date->diff($now)->format("%d days, %h hours and %i minutes");
+    }
+    else{
+        $sem = '2';
+        $sem_start=$sem_two_start;
+        $sem_end=$sem_two_end;
+        $date = new DateTime($sem_two_end);
+        $now = new DateTime();
+        $day_left=$date->diff($now)->format("%d days, %h hours and %i minutes");
+        
+        if ($rollback=='1'){
+          $sem = '1';
+        }
+    }
+    $fyp = App\Fyp::where("student_id", "=", Auth::id())->first();
+    $fypparts = App\Fyppart::where("fyp_id", "=", $fyp->id)->get();
+    $fyppart=$fypparts->where("part","=",$sem)->first();
   ?>
   <body>
     <div class="container">
@@ -74,6 +108,7 @@
               <button onclick="reloadDoc()" class = "submit">Submit</button>
               <input type="checkbox" name="signature" required> I agree that this submission file will be taken as final submission if no more submission after this before duedate.<br>
               <input type="hidden" value="{{ csrf_token() }}" name="_token">
+              <input type="hidden" value= {{$fyppart->id}} name="fyppart_id">
             </form>
           </div>
           <script type="text/javascript">
