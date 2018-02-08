@@ -31,9 +31,9 @@ class ReportController extends Controller
 
     {
 
-        $fypparts = Fyppart::latest()->paginate(10);
+        $fyps = Fyp::all();
 
-        return view('reports.index',compact('fypparts'))
+        return view('reports.index',compact('fyps'))
 
             ->with('i', (request()->input('page', 1) - 1) * 5);
 

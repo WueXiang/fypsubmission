@@ -14,9 +14,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                  <?php
+                                    $i=1
+                                    ?>
                                      @foreach ($meetinglogs as $meetinglog)
                                       <tr>
-                                          <td><a href="/index/{{$meetinglog->id}}"> {{$meetinglog->id }} </a></td>
+                                          <td><a href="/index/{{$meetinglog->id}}"> {{$i++}} </a></td>
                                           <td><a href="/index/{{$meetinglog->id}}"> {{$meetinglog->meeting_date}} </a></td>
                                       </tr>
                                      @endforeach

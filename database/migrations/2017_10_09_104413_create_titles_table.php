@@ -41,7 +41,7 @@ class CreateTitlesTable extends Migration
         });
         DB::table('titles')->insert(
         [   
-            'id' => '11112222',
+            'id' => '100',
             'title' => 'AI killing robot',
             'type' => 'Project',
             'specialization'=> 'GD',
@@ -50,7 +50,7 @@ class CreateTitlesTable extends Migration
         ]);
         DB::table('titles')->insert(
         [
-            'id' => '11113333',
+            'id' => '101',
             'title' => 'Music Composer',
             'type' => 'Research',
             'specialization'=> 'SE',
@@ -59,7 +59,7 @@ class CreateTitlesTable extends Migration
         ]);
         DB::table('titles')->insert(
         [
-            'id' => '11114444',
+            'id' => '102',
             'title' => 'Emotion Simulator',
             'type' => 'Research',
             'specialization'=> 'DS',
@@ -68,7 +68,7 @@ class CreateTitlesTable extends Migration
         ]);
         DB::table('titles')->insert(
         [
-            'id' => '11115555',
+            'id' => '103',
             'title' => 'WiFi Range Extender',
             'type' => 'Project',
             'specialization'=> 'IS',

@@ -2,9 +2,45 @@
 
 @section('content')
 <?php
+use Carbon\Carbon;
   if (Auth::check()) {
+    if ( empty($rollback[0]) ){
+      $rollback[0] = '0';
+    }
+    $sem_one = App\Semester::where('part', '=', '1')->first();
+    $sem_one_start = $sem_one->start_date;
+    $sem_one_end = $sem_one->end_date;
+
+    $sem_two = App\Semester::where('part', '=', '2')->first();
+    $sem_two_start = $sem_two->start_date;
+    $sem_two_end = $sem_two->end_date;
+
+    $today = Carbon::today();
+    if (($today>=$sem_one_start)&&($today<$sem_two_start)){
+        $sem = '1';
+        $sem_start=$sem_one_start;
+        $sem_end=$sem_one_end;
+        $date = new DateTime($sem_one_end);
+        $now = new DateTime();
+        $day_left=$date->diff($now)->format("%d days, %h hours and %i minutes");
+    }
+    else{
+        $sem = '2';
+        $sem_start=$sem_two_start;
+        $sem_end=$sem_two_end;
+        $date = new DateTime($sem_two_end);
+        $now = new DateTime();
+        $day_left=$date->diff($now)->format("%d days, %h hours and %i minutes");
+        
+        if ($rollback[0]=='1'){
+          $sem = '1';
+        }
+    }
+
+
       // $fyp = App\Fyppart::where("id", "=", $fyp_id)->first();
-      $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();//part1 only
+      $fypparts = App\Fyppart::where("fyp_id", "=", $fyp->id)->get();
+      $fyppart=$fypparts->where("part","=",$sem)->first();
       $title = App\Title::where("id", "=", $fyp->title_id)->first();
       $title_title = $title->title;
       $title_id = $title->id;
@@ -41,14 +77,26 @@
     return view('auth/login');
   }
 ?>
-
 <h1 style="padding-left:100px">No {{$title_id}} {{$title_title}}</h1><br>
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
-
+<div>
+  @if($rollback[0]=='1')
+  <a class="btn btn-default" href="{{route('present')}}" onclick="event.preventDefault();document.getElementById('present').submit();">
+    <h2 style="padding-left:100px; color:grey; opacity:50;">FYP Phase {{$sem}} {{$sem_one_start}} until {{$sem_one_end}}</h2>
+  </a>
+  @elseif($rollback[0]=='0')
+  <a class="btn btn-default" href="{{route('rollback')}}" onclick="event.preventDefault();document.getElementById('rollback').submit();">
+    <h2 style="padding-left:100px; color:grey; opacity:50;">FYP Phase {{$sem}} {{$sem_start}} until {{$sem_end}}</h2>
+  </a>
+  @endif
+    
+  <form id="present" action="{{ route('present') }}" method="GET" style="display: none;">{{ csrf_field() }}</form>
+  <form id="rollback" action="{{ route('rollback') }}" method="GET" style="display: none;">{{ csrf_field() }}</form>
+</div><br>
 
 <div class="container">
   <div class="row">

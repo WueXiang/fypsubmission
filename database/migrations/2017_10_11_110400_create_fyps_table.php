@@ -14,7 +14,7 @@ class CreateFypsTable extends Migration
     public function up()
     {
         Schema::create('fyps', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->integer('student_id')->unsigned();
             // $table->foreign('student_id')->references('id')->on('users');
             $table->integer('title_id')->unsigned();
@@ -24,16 +24,16 @@ class CreateFypsTable extends Migration
 
             DB::table('fyps')->insert(
             [
-                'id'=> '11112222',
+                'id'=> '1011',
                 'student_id' => '1133557799',
-                'title_id' => '11112222'
+                'title_id' => '101'
             ]);
 
             DB::table('fyps')->insert(
             [
-                'id'=> '22222222',
+                'id'=> '1001',
                 'student_id' => '1122334455',
-                'title_id' => '11114444'
+                'title_id' => '100'
             ]);
 
     }

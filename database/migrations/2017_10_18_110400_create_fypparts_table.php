@@ -14,8 +14,8 @@ class CreateFypPartsTable extends Migration
     public function up()
     {
         Schema::create('fypparts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('fyp_id')->unsigned();
+            $table->increments('id');
+            $table->integer('fyp_id')->unsigned();
             // $table->foreign('fyp_id')->references('id')->on('fyps');
             $table->integer('part');
             $table->string('supervisor_mark')->nullable();
@@ -25,16 +25,30 @@ class CreateFypPartsTable extends Migration
 
         DB::table('fypparts')->insert(
         [
-            'id'=> '11112222',
-            'fyp_id' => '11112222',
+            'id'=> '10011',
+            'fyp_id' => '1001',
             'part' => '1'
         ]);
 
         DB::table('fypparts')->insert(
         [
-            'id'=> '22222222',
-            'fyp_id' => '22222222',
+            'id'=> '10012',
+            'fyp_id' => '1001',
+            'part' => '2'
+        ]);
+
+        DB::table('fypparts')->insert(
+        [
+            'id'=> '10111',
+            'fyp_id' => '1011',
             'part' => '1'
+        ]);
+
+        DB::table('fypparts')->insert(
+        [
+            'id'=> '10112',
+            'fyp_id' => '1011',
+            'part' => '2'
         ]);
     }
 

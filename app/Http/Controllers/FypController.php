@@ -96,14 +96,14 @@ class FypController extends Controller
 
         DB::table('fypparts')->insert(
         [
-            'id' => $title_id.$student_id.'1',
+            // 'id' => $title_id.$student_id.'1',
             'fyp_id' => $title_id.$student_id,
             'part' => '1',
         ]);
 
         DB::table('fypparts')->insert(
         [
-            'id' => $title_id.$student_id.'2',
+            // 'id' => $title_id.$student_id.'2',
             'fyp_id' => $title_id.$student_id,
             'part' => '2',
         ]);

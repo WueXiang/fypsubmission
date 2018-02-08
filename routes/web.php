@@ -28,6 +28,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/rollback', 'HomeController@rollback')->name('rollback');
+Route::get('/present', 'HomeController@present')->name('present');
 // Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
 Route::prefix('admin')->group(function(){
@@ -101,43 +104,11 @@ Route::prefix('student')->group(function(){
     Route::get('/report', function () {
         return view('student/report');
     });
-    // Route::post('report', function (Request $request) {
-
-    //     $user = App\User::find(Auth::user()->id);
-    //     $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-    //     $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
-    //     $file=request()->file('file');
-    //     $filename = $file->getClientOriginalName();
-    //     // $ext=$file->guessClientExtension();
-    //     // $file->storeAs('uploads/'.$fyp_id,"report.pdf");
-    //     $ext = pathinfo($filename, PATHINFO_EXTENSION);
-    //     $destination = 'student/reports/';
-    //     $codename= ''.$fyppart->id.'.pdf';
-    //     $allowed= array('pdf');
-    //     if( ! in_array( $ext, $allowed ) ) {
-    //         echo 'File format error: Only support pdf format.';
-    //     }
-    //     else{
-    //         // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
-    //         $file->move($destination, $codename);
-    //         $request->request->add(['filename' => $codename]);
-    //         $request->request->add(['fyp_id' => $fyppart->id]);
-    //         // $request->request->add(['id' => $fyppart->id]);
-            
-    //         $data = $request->validate([
-    //             // 'id' => 'required',
-    //             'fyp_id' => 'required',
-    //             'filename'=>'required',
-    //         ]);
-    //         // $report = App\Report::updateOrCreate(['id' => $fyppart->id]);
-    //         $report = tap(new App\Report($data))->save();
-
-    //         return view('student/report');
-    //     }
-    // });
 
     
 });
+
+Route::resource('semesters','SemesterController');
 
 Route::resource('titles','TitleController');
 
@@ -150,8 +121,6 @@ Route::resource('meetinglogs','MeetinglogController');
 Route::resource('reports','ReportController');
 
 Route::resource('plagiarismreports','PlagiarismReportController');
-
-
 
 Route::get('/index/{id}', function ($id) {
     $meetinglog = \App\Meetinglog::where('id', '=', $id)->first();

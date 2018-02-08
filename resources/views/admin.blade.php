@@ -2,6 +2,9 @@
 
 @section('content')
 <?php
+
+  use Carbon\Carbon;
+
   if (Auth::check()){
     $fyp_count = App\Fyp::count();
     if ($fyp_count>1){
@@ -34,6 +37,22 @@
     else{
       $pending_request_count_status = ''.$pending_request_count.' pending request';
     }
+
+    $sem_one = App\Semester::where('part', '=', '1')->first();
+    $sem_one_start = $sem_one->start_date;
+    $sem_one_end = $sem_one->end_date;
+
+    $sem_two = App\Semester::where('part', '=', '2')->first();
+    $sem_two_start = $sem_two->start_date;
+    $sem_two_end = $sem_two->end_date;
+
+    $today = Carbon::now()->toDateString();
+    if (($today>=$sem_one_start)&&($today<$sem_two_start)){
+        $sem = '1';
+    }
+    else{
+        $sem = '2';
+    }
   }
 
 ?>
@@ -42,7 +61,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Phase Period</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -50,8 +69,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
+{{--                     <h1 style="color:grey">Phase {{$sem}}</h1>
+                    <p>{{$sem_one_start}} until {{$sem_one_end}}</p> --}}
 
-                    You are logged in as {{Auth::user()->name}} !
+                    <a class="btn btn-success" href="{{ route('semesters.edit',$sem_one->id) }}" style="margin:10px"><p><strong>Phase One: </strong>{{$sem_one_start}} until {{$sem_one_end}}</p></a>
+                    <br>
+                    <a class="btn btn-success" href="{{ route('semesters.edit',$sem_two->id) }}" style="margin:10px"><p><strong>Phase Two: </strong>{{$sem_two_start}} until {{$sem_two_end}}</p></a>
+
+{{--                     <div class="pull-right">
+                        <a class="btn btn-success" href="{{ route('semesters.edit',$sem_one->id) }}"> Create New Title</a>
+                    </div> --}}
                 </div>
             </div>
         </div>

@@ -6,11 +6,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Title;
+use App\Semester;
 use App\User;
 
 
-class TitleController extends Controller
+class SemesterController extends Controller
 
 {
 
@@ -28,9 +28,9 @@ class TitleController extends Controller
 
     {
 
-        $titles = Title::latest()->paginate(10);
+        $semesters = Semester::latest()->paginate(10);
 
-        return view('titles.index',compact('titles'))
+        return view('semesters.index',compact('semesters'))
 
             ->with('i', (request()->input('page', 1) - 1) * 5);
 
@@ -51,10 +51,9 @@ class TitleController extends Controller
 
     {
 
-        $lecturers = \DB::table('users')->where('lecturer', '=', '1')->pluck('name','id');
-        return view('titles.create')->with('lecturers', $lecturers);
+        return view('semesters.create');
         //original
-        // return view('titles.create');
+        // return view('semesters.create');
 
     }
 
@@ -77,18 +76,15 @@ class TitleController extends Controller
 
         request()->validate([
 
-            'title' => 'required',
-            'type' => 'required',
-            'specialization' => 'required',
-            'supervisor_id' => 'required',
-            'co_supervisor_id' => 'nullable',
-            'moderator_id' => 'nullable',
+            'part' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
 
         ]);
 
-        Title::create($request->all());
+        Semester::create($request->all());
 
-        return redirect()->route('titles.index')->with('success','Title created successfully');
+        return redirect()->route('semesters.index')->with('success','Semester created successfully');
 
     }
 
@@ -109,9 +105,9 @@ class TitleController extends Controller
 
     {
         $students = User::where('student','=','1')->pluck('name','id');
-        $title = Title::find($id);
+        $semester = Semester::find($id);
 
-        return view('titles.show',compact('title'))->with('students',$students);
+        return view('semesters.show',compact('semester'))->with('students',$students);
 
     }
 
@@ -133,8 +129,8 @@ class TitleController extends Controller
     {
         $lecturers = \DB::table('users')->where('lecturer', '=', '1')->pluck('name','id');
         
-        $title = Title::find($id);
-        return view('titles.edit',compact('title'))->with('lecturers', $lecturers);
+        $semester = Semester::find($id);
+        return view('semesters.edit',compact('semester'))->with('lecturers', $lecturers);
         
     }
 
@@ -159,19 +155,15 @@ class TitleController extends Controller
 
         request()->validate([
 
-            'title' => 'required',
-            'type' => 'required',
-            'specialization' => 'required',
-            'supervisor_id' => 'required',
-            'co_supervisor_id' => 'nullable',
-            'moderator_id' => 'nullable',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
 
-        Title::find($id)->update($request->all());
+        Semester::find($id)->update($request->all());
 
-        return redirect()->route('titles.index')
+        return view('admin')
 
-                        ->with('success','Title updated successfully');
+                        ->with('success','Semester updated successfully');
 
     }
 
@@ -192,9 +184,9 @@ class TitleController extends Controller
 
     {
 
-        Title::find($id)->delete();
+        Semester::find($id)->delete();
 
-        return redirect()->back()->with('success','Title deleted successfully');
+        return redirect()->back()->with('success','Semester deleted successfully');
 
     }
 

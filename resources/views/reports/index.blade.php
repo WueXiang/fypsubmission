@@ -47,17 +47,11 @@
 
         </tr>
 
-    @foreach ($fypparts as $fyppart)
+    @foreach ($fyps as $fyp)
     <?php
-    $fyp = App\Fyp::where("id", "=", $fyppart->fyp_id)->first();
-    if ($fyp === null) {
-        $fyp_id = "not available";
-        // $fyp_id = "";
-    }
-    else{
-        $fyp_id = $fyp->id;
-        // $fyp_email = $fyp->email;
-    }
+    $fyp_id = $fyp->id;
+    $fyppart1 = App\Fyppart::where("fyp_id", "=", $fyp->id)->where("part", "=", "1")->first();
+    $fyppart2 = App\Fyppart::where("fyp_id", "=", $fyp->id)->where("part", "=", "2")->first();
     $student = App\User::where("id", "=", $fyp->student_id)->first();
     if ($student === null) {
         $student_name = "not available";
@@ -68,25 +62,45 @@
         $student_email = $student->email;
     }
     
-    $report = App\Report::where("fyp_id", "=", $fyppart->id)->get();
-    if ($report->count()< 1) {
+    $report1 = App\Report::where("fyp_id", "=", $fyppart1->id)->get();
+    if ($report1->count()< 1) {
         // $report_name = "not available";
-        $report_date = "not submitted";
+        $report1_date = "not submitted";
     }
     else{
         // $report_name = $report->name;
-        $report_latest = $report->last();
-        $report_date = $report_latest->created_at;
+        $report1_latest = $report1->last();
+        $report1_date = $report1_latest->created_at;
     }
-    $plagiarismreport = App\PlagiarismReport::where("fyp_id", "=", $fyppart->id)->get();
-    if ($plagiarismreport->count()<1) {
+    $plagiarismreport1 = App\PlagiarismReport::where("fyp_id", "=", $fyppart1->id)->get();
+    if ($plagiarismreport1->count()<1) {
         // $plagiarismreport_name = "not available";
-        $plagiarismreport_date = "not submitted";
+        $plagiarismreport1_date = "not submitted";
     }
     else{
         // $plagiarismreport_name = $plagiarismreport->name;
-        $plagiarismreport_latest = $plagiarismreport->last();
-        $plagiarismreport_date = $plagiarismreport_latest->created_at;
+        $plagiarismreport1_latest = $plagiarismreport1->last();
+        $plagiarismreport1_date = $plagiarismreport1_latest->created_at;
+    }
+    $report2 = App\Report::where("fyp_id", "=", $fyppart2->id)->get();
+    if ($report2->count()< 1) {
+        // $report_name = "not available";
+        $report2_date = "not submitted";
+    }
+    else{
+        // $report_name = $report->name;
+        $report2_latest = $report2->last();
+        $report2_date = $report2_latest->created_at;
+    }
+    $plagiarismreport2 = App\PlagiarismReport::where("fyp_id", "=", $fyppart2->id)->get();
+    if ($plagiarismreport2->count()<1) {
+        // $plagiarismreport_name = "not available";
+        $plagiarismreport2_date = "not submitted";
+    }
+    else{
+        // $plagiarismreport_name = $plagiarismreport->name;
+        $plagiarismreport2_latest = $plagiarismreport2->last();
+        $plagiarismreport2_date = $plagiarismreport2_latest->created_at;
     }
     // $moderator = App\User::where("id", "=", $fyppart->moderator_id)->first();
     // if ($moderator === null) {
@@ -110,19 +124,29 @@
     <tr>
 
         <td>{{ $fyp->id }}</td>
-        <td>{{ $student_name}}</td>
+        <td>{{ $student_name}}<br>{{$student_email}}</td>
         <td>
-            @if (($report->count()< 1))
-            <a class="btn btn-info">Download</a><br>{{ $report_date}}</td>
+            @if (($report1->count()< 1))
+            <a class="btn btn-info">Interim Report</a><br>{{ $report1_date}}<br>
             @else
-            <a class="btn btn-primary" href="/report_download/{{$fyppart->id}}">Download</a><br>{{ $report_date}}
+            <a class="btn btn-primary" href="/report_download/{{$fyppart1->id}}">Interim Report</a><br>{{ $report1_date}}<br>
+            @endif
+            @if (($report2->count()< 1))
+            <a class="btn btn-info">Final Report</a><br>{{ $report2_date}}<br>
+            @else
+            <a class="btn btn-primary" href="/report_download/{{$fyppart2->id}}">Final Report</a><br>{{ $report2_date}}<br>
             @endif
         </td>
         <td>
-            @if (($plagiarismreport->count()< 1))
-            <a class="btn btn-info">Download</a><br>{{ $plagiarismreport_date}}</td>
+            @if (($plagiarismreport1->count()< 1))
+            <a class="btn btn-info">Phase 1</a><br>{{ $plagiarismreport1_date}}<br>
             @else
-            <a class="btn btn-primary" href="/plagiarismreport_download/{{$fyppart->id}}">Download</a><br>{{ $plagiarismreport_date}}
+            <a class="btn btn-primary" href="/plagiarismreport_download/{{$fyppart1->id}}">Phase 1</a><br>{{ $plagiarismreport1_date}}<br>
+            @endif
+            @if (($plagiarismreport2->count()< 1))
+            <a class="btn btn-info">Phase 2</a><br>{{ $plagiarismreport2_date}}<br>
+            @else
+            <a class="btn btn-primary" href="/plagiarismreport_download/{{$fyppart2->id}}">Phase 2</a><br>{{ $plagiarismreport2_date}}<br>
             @endif
         </td>
 
