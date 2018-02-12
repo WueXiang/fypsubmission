@@ -81,7 +81,16 @@ class FypController extends Controller
         $student_id = $request->student_id;
         $title_id = $request->title_id;
 
-        $request->request->add(['id' => $title_id.$student_id]);
+        if (Fyp::where('id','=', $title_id.'1')->count() > 0)
+        {
+            $fyp_id = $title_id.'2';
+        }
+        else
+        {
+            $fyp_id = $title_id.'1';
+        }
+
+        $request->request->add(['id' => $fyp_id ]);
 
         request()->validate([
 
@@ -96,15 +105,15 @@ class FypController extends Controller
 
         DB::table('fypparts')->insert(
         [
-            // 'id' => $title_id.$student_id.'1',
-            'fyp_id' => $title_id.$student_id,
+            'id' => $fyp_id.'1',
+            'fyp_id' => $fyp_id ,
             'part' => '1',
         ]);
 
         DB::table('fypparts')->insert(
         [
-            // 'id' => $title_id.$student_id.'2',
-            'fyp_id' => $title_id.$student_id,
+            'id' => $fyp_id.'2',
+            'fyp_id' => $fyp_id,
             'part' => '2',
         ]);
 

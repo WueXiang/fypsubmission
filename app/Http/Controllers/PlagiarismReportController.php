@@ -78,14 +78,14 @@ class PlagiarismReportController extends Controller
     {   
         // exit($request->fyppart_id);
 
-        $fyppart = Fyppart::where("fyp_id", "=", $request->fyppart_id)->first();
+        $fyppart = Fyppart::where("id", "=", $request->fyppart_id)->first();
         $file=request()->file('file');
         $filename = $file->getClientOriginalName();
         // $ext=$file->guessClientExtension();
         // $file->storeAs('uploads/'.$fyp_id,"plagiarismreport.pdf");
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         // $destination = '/';
-        $codename= ''.$fyppart->id.'plagiarismreport.pdf';
+        $codename= ''.$request->fyppart_id.'plagiarismreport.pdf';
         $allowed= array('pdf');
         if( ! in_array( $ext, $allowed ) ) {
             echo 'File format error: Only support pdf format.';
@@ -94,7 +94,7 @@ class PlagiarismReportController extends Controller
             // echo '<img src= "uploads/'.$file->getClientOriginalName().'"/>';
             $file->move(public_path(), $codename);
             $request->request->add(['filename' => $codename]);
-            $request->request->add(['fyp_id' => $fyppart->id]);
+            $request->request->add(['fyp_id' => $request->fyppart_id]);
             // $request->request->add(['id' => $fyppart->id]);
             
             $data = $request->validate([
@@ -104,7 +104,6 @@ class PlagiarismReportController extends Controller
             ]);
             // $plagiarismreport = App\PlagiarismReport::updateOrCreate(['id' => $fyppart->id]);
             $plagiarismreport = tap(new PlagiarismReport($data))->save();
-
             return view('lecturer/plagiarismreport')->with('fyppart',$fyppart)->with('success','PlagiarismReport created successfully');
         }
     }

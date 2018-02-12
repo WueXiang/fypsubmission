@@ -17,11 +17,50 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $user = App\User::find(Auth::user()->id);
-                                    $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
-                                    $fyppart = App\Fyppart::where("fyp_id", "=", $fyp->id)->first();
+                                    use Carbon\Carbon;
+  if (Auth::check()) {
+    $user = App\User::find(Auth::user()->id);
+    if ( empty($rollback) ){
+      $rollback = '0';
+    }
+    $sem_one = App\Semester::where('part', '=', '1')->first();
+    $sem_one_start = $sem_one->start_date;
+    $sem_one_end = $sem_one->end_date;
+
+    $sem_two = App\Semester::where('part', '=', '2')->first();
+    $sem_two_start = $sem_two->start_date;
+    $sem_two_end = $sem_two->end_date;
+
+    $today = Carbon::today();
+    if (($today>=$sem_one_start)&&($today<$sem_two_start)){
+        $sem = '1';
+        $sem_start=$sem_one_start;
+        $sem_end=$sem_one_end;
+        $date = new DateTime($sem_one_end);
+        $now = new DateTime();
+        $day_left=$date->diff($now)->format("%d days, %h hours and %i minutes");
+    }
+    else{
+        $sem = '2';
+        $sem_start=$sem_two_start;
+        $sem_end=$sem_two_end;
+        $date = new DateTime($sem_two_end);
+        $now = new DateTime();
+        $day_left=$date->diff($now)->format("%d days, %h hours and %i minutes");
+        
+        if ($rollback=='1'){
+          $sem = '1';
+        }
+    }
+
+    if ( App\Fyp::where("student_id", "=", $user->id)->count()>0){
+      $fyp = App\Fyp::where("student_id", "=", $user->id)->first();
+      $fypparts = App\Fyppart::where("fyp_id", "=", $fyp->id)->get();
+      $fyppart=$fypparts->where("part","=",$sem)->first();
                                     $meetinglog = App\Meetinglog::where("fyp_id", "=", $fyppart->id)->get();
-                                    $i=1
+                                    $i=1;
+                                }
+                            }
                                     ?>
                                      @foreach ($meetinglog as $item)
                                      

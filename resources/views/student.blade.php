@@ -124,8 +124,8 @@ use Carbon\Carbon;
             @if( App\Fyp::where("student_id", "=", $user->id)->count()>0)
             </a>
             @endif
-            @if( App\Fyp::where("student_id", "=", $user->id)->count()>0)
-            <a href ="student/meetinglog">
+            @if(( App\Fyp::where("student_id", "=", $user->id)->count()>0)&&($rollback == '0'))
+            <a href ="student/meetinglog/">
             @endif
               <div class="col-sm-4" style="background-color:#ff3377;color:white; height:300px;">
                 <h3><strong>Meeting Log</strong></h3>
@@ -135,7 +135,7 @@ use Carbon\Carbon;
             @if( App\Fyp::where("student_id", "=", $user->id)->count()>0)
             </a>
             @endif
-            @if( App\Fyp::where("student_id", "=", $user->id)->count()>0)
+            @if(( App\Fyp::where("student_id", "=", $user->id)->count()>0)&&($rollback == '0'))
             <a href="{{route('reports.create',$fyppart->id)}}">
             @endif
                 <div class="col-sm-4" style="background-color:#008f82;color:white;height:300px;">

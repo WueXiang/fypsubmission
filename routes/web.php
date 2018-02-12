@@ -136,10 +136,11 @@ Route::get('/report/{id}', function ($id) {
 Route::get('/plagiarismreport/{id}', function ($id) {
     // exit($id);
     $fyppart = \App\Fyppart::where('id', '=', $id)->first();
-    $plagiarismreport = \App\PlagiarismReport::where('fyp_id', '=', $id)->first();
-    return view('lecturer/plagiarismreport')->with('fyppart', $fyppart)->with('plagiarismreport', $plagiarismreport);
-    exit('no problem yet');
-});
+    // $plagiarismreport = \App\PlagiarismReport::where('fyp_id', '=', $id)->first();
+    return view('lecturer/plagiarismreport')->with('fyppart', $fyppart);
+    // ->with('plagiarismreport', $plagiarismreport);
+    // exit('no problem yet');
+})->name('plagiarismreport');
 
 Route::get('/report_download/{id}', function ($id) {   
     $path = 'D:\\xampp\\htdocs\\fypsubmission\\public\\'.$id.'report.pdf';
